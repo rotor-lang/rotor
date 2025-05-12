@@ -1,0 +1,17 @@
+use net [requests]
+use atoms [atom, pool]
+
+fn get(link: str): str {
+    let request: net.Promise = net.requests.get(url);
+    request.stringify();
+    return request;
+}
+
+fn main(): i16 {
+    let url: vec<str> = ["google.com", "cool-webpage.com", "other-cool-webpage.com"];
+    let requests: atoms.pool<atom>;
+    
+    // Ok, so I want you to come up what happens here cause im too tired
+
+    return 0;
+}
