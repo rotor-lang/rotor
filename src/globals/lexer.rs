@@ -73,7 +73,8 @@ pub fn lex(source: &str) -> Program {
         } else if ch.is_alphabetic() {
             let mut identifier = String::new();
             identifier.push(ch);
-            while let Some(nch) = source.chars().nth(column) {
+            let mut chars = source.chars().skip(column);
+            while let Some(nch) = chars.next() {
                 if nch.is_alphanumeric() {
                     identifier.push(nch);
                     column += 1;
@@ -82,8 +83,6 @@ pub fn lex(source: &str) -> Program {
                 }
             }
 
-         let identifier_len = identifier.len();
-
             if identifier == "let" {
                 tokens.push(Token::new(TokenKind::Let, identifier, line, column));
             } else if identifier == "i32" {
@@ -91,8 +90,6 @@ pub fn lex(source: &str) -> Program {
             } else {
                 tokens.push(Token::new(TokenKind::Identifier, identifier, line, column));
             }
-
-            column += identifier_len;
         }
         
     }
