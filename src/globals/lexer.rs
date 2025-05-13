@@ -1,24 +1,15 @@
+#[derive(Debug)]
 pub enum TokenKind {
-    // Keywords
     Let,
-    
-    // Identifiers
     Identifier,
-
-    // Literals
     I32,
-    
-    // Operators
     Equal,
-
-    // Types
     Integer,
-
-    // Punctuation
-    Semicolon
+    Semicolon,
 }
 
-struct Token {
+#[derive(Debug)]
+pub struct Token {
     kind: TokenKind,
     value: String,
     line: usize,
@@ -26,38 +17,57 @@ struct Token {
 }
 
 struct Program {
-    tokens: Vec<Token>
+    tokens: Vec<Token>,
+}
+
+impl Program {
+    fn get_debug_info(&self) {
+        for token in &self.tokens {
+            println!("{}", token.get_debug_info());
+        }
+    }
 }
 
 impl Token {
-    fn new(kind: TokenKind, value: String, line: usize, column: usize) -> Self {
-        Token { kind, value, line, column }
-    }
-    fn is_valid(&self) -> bool {
-        match self.kind {
-            TokenKind::Let => self.value == "let" && self.line > 0 && self.column > 0,
-            TokenKind::Identifier => !self.value.is_empty() && self.line > 0 && self.column > 0,
-            TokenKind::I32 => self.value == "i32" && self.line > 0 && self.column > 0,
-            TokenKind::Equal => self.value == "=" && self.line > 0 && self.column > 0,
-            TokenKind::Integer => self.value.parse::<i32>().is_ok() && self.line > 0 && self.column > 0,
-            TokenKind::Semicolon => self.value == ";" && self.line > 0 && self.column > 0,
-            _ => false
+    fn new(kind: TokenKind, value: impl Into<String>, line: usize, column: usize) -> Self {
+        Token {
+            kind,
+            value: value.into(),
+            line,
+            column,
         }
     }
+
+    fn is_valid(&self) -> bool {
+        match self.kind {
+            TokenKind::Let => self.value == "let",
+            TokenKind::Identifier => !self.value.is_empty(),
+            TokenKind::I32 => self.value == "i32",
+            TokenKind::Equal => self.value == "=",
+            TokenKind::Integer => self.value.parse::<i32>().is_ok(),
+            TokenKind::Semicolon => self.value == ";",
+        }
+    }
+
     fn get_debug_info(&self) -> String {
-        format!("Token: {:?}, Value: {}, Line: {}, Column: {}", self.kind, self.value, self.line, self.column)
+        format!(
+            "Token: {:?}, Value: {}, Line: {}, Column: {}",
+            self.kind, self.value, self.line, self.column
+        )
     }
 }
 
-// Lexer itself
-
-fn lex(source: &str) -> Program {
+pub fn lex(source: &str) -> Program {
     let mut tokens = Vec::new();
     let mut line = 1;
     let mut column = 1;
-    
-    for (index, ch) in source.chars().enumerate() {
-        
+
+    for ch in source.chars() {
+        if ch == '=' {
+            tokens.push(Token::new(TokenKind::Equal, "=", line, column));
+        }
+        column += 1;
     }
 
+    Program { tokens }
 }

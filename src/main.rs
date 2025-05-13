@@ -1,3 +1,8 @@
+mod globals;
+
+use globals::lexer::{Token, TokenKind, lex};
+
 fn main() {
-    // bruh
+    let myToken: Token = Token::new()
 }
+
