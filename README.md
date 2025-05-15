@@ -86,5 +86,3 @@ Rotor is in active development! If you have ideas, bug fixes, or want to help, [
 ### License
 
 This project is licensed under the Zlib/libpng license.
-
-```
