@@ -1,3 +1,5 @@
+use crate::globals::handle_error::{ErrorKind, Error};
+
 #[allow(dead_code)]
 #[derive(Debug)]
 pub enum TokenKind {
@@ -9,6 +11,7 @@ pub enum TokenKind {
     Semicolon,
 }
 
+
 #[derive(Debug)]
 pub struct Token {
     kind: TokenKind,
@@ -19,6 +22,7 @@ pub struct Token {
 
 pub struct Program {
     tokens: Vec<Token>,
+    errors: Vec<ErrorKind>
 }
 
 impl Program {
@@ -60,6 +64,7 @@ impl Token {
 
 pub fn lex(source: &str) -> Program {
     let mut tokens = Vec::new();
+    let mut errors = Vec::new();
     let mut line = 1;
     let mut column = 1;
 
@@ -94,5 +99,5 @@ pub fn lex(source: &str) -> Program {
         
     }
 
-    Program { tokens }
+    Program { tokens, errors }
 }

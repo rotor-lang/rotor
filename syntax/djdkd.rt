@@ -11,7 +11,7 @@ fn main(): i16 {
     let url: vec<str> = ["google.com", "cool-webpage.com", "other-cool-webpage.com"];
     let requests: atoms.pool<atom>;
     
-    // Ok, so I want you to come up what happens here cause im too tired
+    // TODO
 
     return 0;
 }
