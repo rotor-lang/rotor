@@ -3,13 +3,15 @@
 
 use crate::globals::handle_error::{ErrorKind, Error};
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum TokenKind {
     Let,
     Identifier,
     I32,
     Equal,
     Integer,
+    Float,
+    String,
     Semicolon,
     Newline
 }
@@ -23,12 +25,12 @@ pub struct Token {
     column: usize,
 }
 
-pub struct Program {
+pub struct Lexed {
     tokens: Vec<Token>,
     errors: Vec<ErrorKind>
 }
 
-impl Program {
+impl Lexed {
     pub fn get_debug_info(&self) {
         for token in &self.tokens {
             println!("{}", token.get_debug_info());
@@ -53,6 +55,8 @@ impl Token {
             TokenKind::I32 => self.value == "i32",
             TokenKind::Equal => self.value == "=",
             TokenKind::Integer => self.value.parse::<i32>().is_ok(),
+            TokenKind::Float => self.value.parse::<f32>().is_ok(),
+            TokenKind::String => self.value.starts_with('"') && self.value.ends_with('"'),
             TokenKind::Semicolon => self.value == ";",
             TokenKind::Newline => self.value == "\n",
         }
@@ -66,16 +70,16 @@ impl Token {
     }
 }
 
-pub fn lex(source: &str) -> Program {
-    let mut tokens = Vec::new();
-    let mut errors = Vec::new();
-    let mut line = 1;
-    let mut column = 1;
-    let mut pos = 0;
+pub fn lex(source: &str) -> Lexed {
+    let mut tokens: Vec<Token> = Vec::new();
+    let mut errors: Vec<ErrorKind> = Vec::new();
+    let mut line: usize = 1;
+    let mut column: usize = 1;
+    let mut pos: usize = 0;
     let chars: Vec<char> = source.chars().collect();
 
     while pos < chars.len() {
-        let ch = chars[pos];
+        let ch: char = chars[pos];
 
         match ch {
             '=' => {
@@ -107,20 +111,31 @@ pub fn lex(source: &str) -> Program {
             c if c.is_digit(10) => {
                 let start_column = column;
                 let mut number = String::new();
+                let mut other_numeric_type: TokenKind = TokenKind::Integer;
 
                 while pos < chars.len() && chars[pos].is_digit(10) {
-                    number.push(chars[pos]);
-                    pos += 1;
-                    column += 1;
+                    if chars[pos] == '.' && other_numeric_type == TokenKind::Integer {
+                        other_numeric_type = TokenKind::Float;
+                        number.push('.');
+                        pos += 1;
+                        column += 1;
+                    } else {
+                        number.push(chars[pos]);
+                        pos += 1;
+                        column += 1;
+                    }
+                    
                 }
 
-                tokens.push(Token::new(TokenKind::Integer, number, line, start_column));
+                tokens.push(Token::new(other_numeric_type, number, line, start_column));
             }
             c if c.is_whitespace() => {
                 if c == '\n' {
                     tokens.push(Token::new(TokenKind::Newline, "\n", line, column));
                     line += 1;
                     column = 1;
+                } else if c == '\t' {
+                    column += 4; // This is assuming a tab will be 4 spaces. idk anyone who actually has a tab set to 8 spaces. if you do, you should probably call emergency services and get help.
                 } else {
                     column += 1;
                 }
@@ -139,6 +154,6 @@ pub fn lex(source: &str) -> Program {
         }
     }
 
-    Program { tokens, errors }
+    Lexed { tokens, errors }
 }
 
