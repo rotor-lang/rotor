@@ -27,8 +27,8 @@ pub struct Token {
 }
 
 pub struct Lexed {
-    tokens: Vec<Token>,
-    errors: Vec<ErrorKind>
+    pub tokens: Vec<Token>,
+    pub errors: Vec<String>
 }
 
 impl Lexed {
@@ -74,7 +74,7 @@ impl Token {
 
 pub fn lex(source: &str) -> Lexed {
     let mut tokens: Vec<Token> = Vec::new();
-    let mut errors: Vec<ErrorKind> = Vec::new();
+    let mut errors: Vec<String> = Vec::new();
     let mut line: usize = 1;
     let mut column: usize = 1;
     let mut pos: usize = 0;
@@ -112,6 +112,7 @@ pub fn lex(source: &str) -> Lexed {
                 match identifier.as_str() {
                     "let" => tokens.push(Token::new(TokenKind::Let, identifier, line, start_column)),
                     "i32" => tokens.push(Token::new(TokenKind::I32, identifier, line, start_column)),
+                    "f32" => tokens.push(Token::new(TokenKind::Float, identifier, line, start_column)),
                     _ => tokens.push(Token::new(TokenKind::Identifier, identifier, line, start_column)),
                 }
             }
@@ -151,7 +152,7 @@ pub fn lex(source: &str) -> Lexed {
             _ => {
                 Error::new(
                     ErrorKind::InvalidToken,
-                    format!("Invalid token: {}", ch),
+                    format!("Invalid token({}, {}): {}", line, column, ch),
                     line,
                     column,
                 ).push_new(&mut errors);
@@ -160,7 +161,9 @@ pub fn lex(source: &str) -> Lexed {
             }
         }
     }
-
+    if (errors.len() < 1) {
+        errors.push("Good job :)".to_string());
+    }
     Lexed { tokens, errors }
 }
 

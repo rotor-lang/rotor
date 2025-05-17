@@ -2,20 +2,19 @@ mod globals;
 
 use globals::lexer::{Token, TokenKind, lex};
 use globals::handle_error::{ErrorKind, Error};
-use reqwest::header::{ACCEPT, AUTHORIZATION, HeaderMap, HeaderValue};
-use tokio;
-use dotenv::dotenv;
+// use reqwest::header::{ACCEPT, AUTHORIZATION, HeaderMap, HeaderValue};
+// use tokio;
+// use dotenv::dotenv;
 
-const CURRENT_VERSION: &str = "v0.1.0-unrelease1";
+// const CURRENT_VERSION: &str = "v0.1.0-unrelease1";
 
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let args: Vec<String> = std::env::args().collect();
+//#[tokio::main]
+fn main() {
+    let my_code = "let x: i32 = 5;";
 
-    
+    let lexed = lex(my_code);
 
-    println!("{:?}", args);
-    Ok(())
-
+    println!("Lexed Token: {:?}", lexed.tokens);
+    println!("Errors: {:?}", lexed.errors);
 }
 

@@ -24,7 +24,7 @@ impl Error {
         }
     }
 
-    pub fn push_new(&self, destination: &mut Vec<ErrorKind>) {
-        destination.push(self.kind.clone());
+    pub fn push_new(&self, destination: &mut Vec<String>) {
+        destination.push(self.message.clone());
     }
 }
