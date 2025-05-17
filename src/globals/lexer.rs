@@ -13,6 +13,7 @@ pub enum TokenKind {
     Float,
     String,
     Semicolon,
+    Colon,
     Newline
 }
 
@@ -58,6 +59,7 @@ impl Token {
             TokenKind::Float => self.value.parse::<f32>().is_ok(),
             TokenKind::String => self.value.starts_with('"') && self.value.ends_with('"'),
             TokenKind::Semicolon => self.value == ";",
+            TokenKind::Colon => self.value == ":",
             TokenKind::Newline => self.value == "\n",
         }
     }
@@ -89,6 +91,11 @@ pub fn lex(source: &str) -> Lexed {
             }
             ';' => {
                 tokens.push(Token::new(TokenKind::Semicolon, ";", line, column));
+                pos += 1;
+                column += 1;
+            }
+            ':' => {
+                tokens.push(Token::new(TokenKind::Colon, ":", line, column));
                 pos += 1;
                 column += 1;
             }
