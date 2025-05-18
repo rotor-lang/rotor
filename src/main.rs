@@ -10,7 +10,7 @@ use globals::handle_error::{ErrorKind, Error};
 
 //#[tokio::main]
 fn main() {
-    let my_code = "let x: i32 = 5;";
+    let my_code = "let x: i32 = 5; let myString = \"Rotor is spinning\"";
 
     let lexed = lex(my_code);
 

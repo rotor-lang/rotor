@@ -11,7 +11,8 @@ pub enum TokenKind {
     Equal,
     Integer,
     Float,
-    String,
+    String, // In the future it will require extra data for containing the type of string (e.g. raw, format, etc.)
+    // String(char),
     Semicolon,
     Colon,
     Newline
@@ -24,6 +25,7 @@ pub struct Token {
     value: String,
     line: usize,
     column: usize,
+    pos: usize
 }
 
 pub struct Lexed {
@@ -40,12 +42,13 @@ impl Lexed {
 }
 
 impl Token {
-    pub fn new(kind: TokenKind, value: impl Into<String>, line: usize, column: usize) -> Self {
+    pub fn new(kind: TokenKind, value: impl Into<String>, line: usize, column: usize, pos: usize ) -> Self {
         Token {
             kind,
             value: value.into(),
             line,
             column,
+            pos
         }
     }
 
@@ -85,22 +88,23 @@ pub fn lex(source: &str) -> Lexed {
 
         match ch {
             '=' => {
-                tokens.push(Token::new(TokenKind::Equal, "=", line, column));
+                tokens.push(Token::new(TokenKind::Equal, "=", line, column, pos));
                 pos += 1;
                 column += 1;
             }
             ';' => {
-                tokens.push(Token::new(TokenKind::Semicolon, ";", line, column));
+                tokens.push(Token::new(TokenKind::Semicolon, ";", line, column, pos));
                 pos += 1;
                 column += 1;
             }
             ':' => {
-                tokens.push(Token::new(TokenKind::Colon, ":", line, column));
+                tokens.push(Token::new(TokenKind::Colon, ":", line, column, pos));
                 pos += 1;
                 column += 1;
             }
             c if c.is_alphabetic() || c == '_' => {
                 let start_column = column;
+                let start_pos: usize = pos;
                 let mut identifier = String::new();
 
                 while pos < chars.len() && (chars[pos].is_alphanumeric() || chars[pos] == '_') {
@@ -110,14 +114,15 @@ pub fn lex(source: &str) -> Lexed {
                 }
 
                 match identifier.as_str() {
-                    "let" => tokens.push(Token::new(TokenKind::Let, identifier, line, start_column)),
-                    "i32" => tokens.push(Token::new(TokenKind::I32, identifier, line, start_column)),
-                    "f32" => tokens.push(Token::new(TokenKind::Float, identifier, line, start_column)),
-                    _ => tokens.push(Token::new(TokenKind::Identifier, identifier, line, start_column)),
+                    "let" => tokens.push(Token::new(TokenKind::Let, identifier, line, start_column, start_pos)),
+                    "i32" => tokens.push(Token::new(TokenKind::I32, identifier, line, start_column, start_pos)),
+                    "f32" => tokens.push(Token::new(TokenKind::Float, identifier, line, start_column, start_pos)),
+                    _ => tokens.push(Token::new(TokenKind::Identifier, identifier, line, start_column, start_pos)),
                 }
             }
             c if c.is_digit(10) => {
                 let start_column = column;
+                let start_pos: usize = pos; // i feel like eating a jobonga. you don't know what that is? uncultured -_-
                 let mut number = String::new();
                 let mut other_numeric_type: TokenKind = TokenKind::Integer;
 
@@ -135,11 +140,11 @@ pub fn lex(source: &str) -> Lexed {
                     
                 }
 
-                tokens.push(Token::new(other_numeric_type, number, line, start_column));
+                tokens.push(Token::new(other_numeric_type, number, line, start_column, start_pos));
             }
             c if c.is_whitespace() => {
                 if c == '\n' {
-                    tokens.push(Token::new(TokenKind::Newline, "\n", line, column));
+                    tokens.push(Token::new(TokenKind::Newline, "\n", line, column, pos));
                     line += 1;
                     column = 1;
                 } else if c == '\t' {
@@ -149,6 +154,23 @@ pub fn lex(source: &str) -> Lexed {
                 }
                 pos += 1;
             }
+
+            '\"' => {
+                let start_column = column;
+                let mut string = String::new();
+                pos += 1;
+                column += 1;
+                while pos < chars.len() && chars[pos] != '\"' {
+                    string.push(chars[pos]);
+                    pos += 1;
+                    column += 1;
+                }
+                // Eat the closing quote
+                column += 1;
+                pos += 1;
+                tokens.push(Token::new(TokenKind::String, string, line, start_column, pos));
+            }
+
             _ => {
                 Error::new(
                     ErrorKind::InvalidToken,

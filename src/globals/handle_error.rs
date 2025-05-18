@@ -3,6 +3,8 @@ pub enum ErrorKind {
     InvalidToken,
     UnknownIdentifier,
     UnexpectedToken,
+    InvalidEscapeSequence,
+
 }
 
 pub struct Error {

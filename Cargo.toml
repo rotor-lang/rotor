@@ -3,4 +3,4 @@ name = "rotor"
 version = "0.1.0-unreleased1"
 edition = "2024"
 
-[dependencies]
+[dependencies]  
