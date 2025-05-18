@@ -29,7 +29,7 @@
 
 ## How to Install
 
-> Rotor currently requires you to build from source.
+> Windows is the only supported platform that recieves prebuilt binaries. Any other platform currently requires you to build from source.
 
 ### Windows
 
@@ -55,6 +55,29 @@ If you see a version output, congrats — Rotor is installed!
 ---
 
 ### MacOS
+
+1. Make sure you have [Rust](https://www.rust-lang.org/tools/install) and [Git](https://git-scm.com/downloads) installed.
+2. Clone the repository:
+    ```bash
+    git clone https://github.com/rotor-lang/rotor.git
+    cd rotor
+    ```
+3. Build the project:
+    ```bash
+    cargo build --release
+    ```
+4. (Optional) Add the binary to your PATH:
+    ```bash
+    sudo cp target/release/rotor /usr/local/bin/rotor
+    ```
+5. Run it:
+    ```bash
+    rotor --version
+    ```
+
+If you see a version output, congrats — Rotor is installed!
+
+### Linux
 
 1. Make sure you have [Rust](https://www.rust-lang.org/tools/install) and [Git](https://git-scm.com/downloads) installed.
 2. Clone the repository:
