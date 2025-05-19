@@ -10,11 +10,38 @@ use globals::handle_error::{ErrorKind, Error};
 
 //#[tokio::main]
 fn main() {
-    let my_code = "let x: i32 = 5; let myString = \"Rotor is spinning\"";
+    let args = std::env::args().collect::<Vec<_>>();
+    
+    if args.len() < 2  {
+        println!("Use --help for information on commands.");
+        panic!();
+    }
 
-    let lexed = lex(my_code);
-
-    println!("Lexed Token: {:?}", lexed.tokens);
-    println!("Errors: {:?}", lexed.errors);
+    if args[1] == "--help" {
+        println!("Usage: {} [OPTIONS] [FILE]", args[0]);
+        println!("Options:");
+        println!("  --help       Show this help message");
+        println!("  --version    Show the version of the program");
+        println!("  --run        Run the specified file");
+        println!("  --compile    Compile the specified file");
+        println!("  --debug      Debug the specified file");
+        println!("---------------------------------------");
+    } else if args[1] == "--version" {
+        println!("Version: {}", "v0.1.0-unrelease1.1");
+    } else if args[1] == "--run" {
+        if args.len() < 3 {
+            println!("Running is not supported yet.");
+            return;
+        }
+        let source = std::fs::read_to_string(&args[2]).expect("Unable to read file");
+        let lexed = lex(&source);
+        lexed.get_debug_info();
+    } else if args[1] == "--compile" {
+        println!("Compilation is not yet implemented.")
+    } else if args[1] == "--debug" {
+        println!("Debugging is not yet implemented.")
+    } else {
+        println!("Unknown command: {}", args[1]);
+    }
 }
 

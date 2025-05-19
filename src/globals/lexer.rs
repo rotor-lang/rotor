@@ -183,7 +183,7 @@ pub fn lex(source: &str) -> Lexed {
             }
         }
     }
-    if (errors.len() < 1) {
+    if errors.len() < 1 {
         errors.push("Good job :)".to_string());
     }
     Lexed { tokens, errors }
