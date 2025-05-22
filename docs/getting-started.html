@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>01. Getting Started – Rotor</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+    <div class="sidebar">
+        <span class="version">v0.1.0-unrelease1.1</span>
+        <h2>Rotor Docs</h2>
+        <a href="getting-started.html" class="active">01. Getting Started</a>
+    </div>
+
+    <div class="content">
+        <h1>Getting started with the rotor toolchain</h1>
+
+        <p>
+            So you want to start using the rotor toolchain? Well first of all, thank you for trying it out!
+            Even if it's just for a little bit, I hope you have fun while using it!
+            So let's get you all set up and ready to go to start making some awesome programs!
+        </p>
+
+        <h2>Installation</h2>
+        <p>
+            Currently, the rotor toolchain is still in development, so some things may not work as expected.
+            But don't worry, we are working hard to make it better!
+        </p>
+
+        <h3>Windows</h3>
+        <p>Windows users can download the pre-built binaries from the latest release.</p>
+        <ol>
+            <li>Download the latest Windows binaries from the <a href="https://github.com/rotor-lang/rotor/releases/latest">latest release</a>.</li>
+            <li>Extract the contents to a folder of your choice.</li>
+            <li>Add the folder to your <code>PATH</code> environment variable to use <code>rotor</code> from any Command Prompt.</li>
+            <li>Open a new Command Prompt window and run <code>rotor --version</code> to verify.</li>
+        </ol>
+        <div class="tip">
+            <img src="assets/hint.png" alt="Hint" />
+            <span>Tip: Restart your PC after modifying the PATH variable for changes to take effect.</span>
+        </div>
+
+        <h3>macOS</h3>
+        <p>macOS users can install rotor using Homebrew:</p>
+        <pre><code>brew install rotor</code></pre>
+        <div class="tip">
+            <img src="assets/hint.png" alt="Hint" />
+            <span>Tip: If you don't have Homebrew installed, check out <a href="https://brew.sh/">brew.sh</a> for setup instructions.</span>
+        </div>
+
+        <h3>Linux</h3>
+        <p>Linux users can download the <code>.tar.gz</code> archive from the latest release:</p>
+        <ol>
+            <li>Download the latest <code>.tar.gz</code> from the <a href="https://github.com/rotor-lang/rotor/releases/latest">latest release</a>.</li>
+            <li>Extract it using <code>tar -xzf rotor-<em>version</em>.tar.gz</code>.</li>
+            <li>Move the <code>rotor</code> binary to a directory in your <code>PATH</code>, like <code>/usr/local/bin</code>.</li>
+            <li>Verify installation by running <code>rotor --version</code>.</li>
+        </ol>
+        <div class="tip">
+            <img src="assets/hint.png" alt="Hint" />
+            <span>Tip: Use <code>chmod +x rotor</code> if you get permission errors running the binary.</span>
+        </div>
+    </div>
+
+</body>
+</html>

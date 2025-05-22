@@ -1,0 +1,116 @@
+body {
+    display: flex;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fafafa;
+    color: #222;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background-color: #f8f8f8;
+    border-right: 1px solid #ccc;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+.sidebar .version {
+    font-size: 0.9em;
+    color: #777;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.sidebar h2 {
+    margin-top: 10px;
+    border-bottom: 1px solid #bbb;
+    padding-bottom: 6px;
+}
+
+.sidebar a {
+    display: block;
+    margin: 10px 0;
+    color: #3366cc;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.sidebar a:hover {
+    color: #003399;
+}
+
+.sidebar a.active {
+    font-weight: bold;
+    color: #000;
+}
+
+/* Content */
+.content {
+    flex: 1;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #3366cc;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.3em;
+}
+
+p {
+    line-height: 1.6;
+}
+
+code {
+    background: #f4f4f4;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 1em;
+}
+
+pre {
+    background: #f4f4f4;
+    padding: 1em;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+a {
+    color: #3366cc;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #003399;
+}
+
+/* Tip box */
+.tip {
+    background: #fff9db;
+    border-left: 4px solid #ffe066;
+    padding: 10px 12px;
+    margin: 20px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 6px;
+}
+
+.tip img {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+}
+
+.tip span {
+    flex: 1;
+}
+
+.tip code {
+    background: none;
+    padding: 0;
+    font-weight: bold;
+    color: #c7254e;
+}
