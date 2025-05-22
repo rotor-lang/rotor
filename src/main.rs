@@ -40,6 +40,16 @@ fn main() {
         println!("Compilation is not yet implemented.")
     } else if args[1] == "--debug" {
         println!("Debugging is not yet implemented.")
+    } else if args[1] == "--lex" {
+        let source = std::fs::read_to_string(&args[2]).expect("Unable to read file");
+        let lexed = lex(&source);
+        lexed.get_debug_info();
+    } else if args[1] == "--test" {
+        println!("Testing is not yet implemented.")
+    } else if args[1] == "--build" {
+        println!("Building is not yet implemented.")
+    } else if args[1] == "--install" {
+        println!("Installing is not yet implemented.")
     } else {
         println!("Unknown command: {}", args[1]);
     }

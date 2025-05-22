@@ -81,7 +81,7 @@ impl Token {
 
     pub fn get_debug_info(&self) -> String {
         format!(
-            "Token: {:?}, Value: {}, Line: {}, Column: {}",
+            "Token: {:?}, Value: '{}', Line: {}, Column: {}",
             self.kind, self.value, self.line, self.column
         )
     }
