@@ -6,13 +6,16 @@ use crate::globals::handle_error::{ErrorKind, Error};
 #[derive(Debug, PartialEq, Eq)]
 pub enum TokenKind {
     Let,
+    Use,
     Identifier,
     I32,
+    BOOL,
     Equal,
     Integer,
     Float,
     String, // In the future it will require extra data for containing the type of string (e.g. raw, format, etc.)
     // String(char),
+    Boolean,
     Semicolon,
     Colon,
     Newline
@@ -39,6 +42,12 @@ impl Lexed {
             println!("{}", token.get_debug_info());
         }
     }
+    pub fn is_working(&self) -> bool {
+    	if &self.errors.len() == 0 {
+    		return true;
+    	}
+    	return false;
+    }
 }
 
 impl Token {
@@ -55,12 +64,15 @@ impl Token {
     pub fn is_valid(&self) -> bool {
         match self.kind {
             TokenKind::Let => self.value == "let",
+            TokenKind::Use => self.value == "use",
             TokenKind::Identifier => !self.value.is_empty(),
             TokenKind::I32 => self.value == "i32",
             TokenKind::Equal => self.value == "=",
             TokenKind::Integer => self.value.parse::<i32>().is_ok(),
             TokenKind::Float => self.value.parse::<f32>().is_ok(),
             TokenKind::String => self.value.starts_with('"') && self.value.ends_with('"'),
+            TokenKind::BOOL => self.value == "bool",
+            TokenKind::Boolean => self.value == "true" || self.value == "false",
             TokenKind::Semicolon => self.value == ";",
             TokenKind::Colon => self.value == ":",
             TokenKind::Newline => self.value == "\n",
@@ -182,9 +194,6 @@ pub fn lex(source: &str) -> Lexed {
                 column += 1;
             }
         }
-    }
-    if errors.len() < 1 {
-        errors.push("Good job :)".to_string());
     }
     Lexed { tokens, errors }
 }
