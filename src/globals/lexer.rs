@@ -43,10 +43,10 @@ impl Lexed {
         }
     }
     pub fn is_working(&self) -> bool {
-    	if &self.errors.len() == 0 {
-    		return true;
-    	}
-    	return false;
+        if self.errors.len() == 0 {
+            return true;
+        }
+        return false;
     }
 }
 
