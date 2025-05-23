@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>02. Hello, Rotor! - Rotor</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <div class="sidebar">
+            <span class="version">v0.1.0-unrelease1.1</span>
+            <h2>Rotor Docs</h2>
+            <a href="getting-started.html">01. Getting Started</a>
+            <a href="hello-rotor.html" class="active">02. Hello, Rotor!</a>
+        </div>
+
+        <div class="content">
+            <h1>Creating your first program</h1>
+
+            <p>
+                Now that the Rotor toolchain is installed and ready to go, let's create our first program!
+                This document will help you make a program that prints <code>"Rotor is spinning!"</code> to the console and exits
+                with a success code.
+            </p>
+
+            <p>
+                To create a new program, open your terminal in the desired location and run the command:
+            </p>
+            <pre><code>rotor new my_first_project</code></pre>
+
+            <div class="tip">
+                <img src="assets/hint.png" alt="Hint" />
+                <span>
+                    <strong>Tip:</strong> If Rotor says <code>Fatal: Permission denied</code>, try running your terminal with administrator privileges.<br>
+                    On Windows, right-click your terminal and select <em>Run as administrator</em>.<br>
+                    On Unix-based systems, prefix your command with <code>sudo</code> (e.g., <code>sudo rotor new my_first_project</code>).
+                </span>
+            </div>
+
+            <p>
+                This will create a new directory called <code>my_first_project</code> with the following structure:
+            </p>
+            <pre class="directory-tree">
+my_first_project/
+├── src/
+│   └── main.rt
+└── rotor.conf
+            </pre>
+
+            <p>
+                The <code>src</code> directory contains your program's source code, and the <code>rotor.conf</code> file contains the configuration for your project.
+            </p>
+
+            <div class="tip">
+                <img src="assets/hint.png" alt="Hint" />
+                <span>
+                    <strong>Tip:</strong> You typically don't need to modify <code>rotor.conf</code> unless you know what you're doing.
+                    Rotor will manage it based on your project structure and customizations.
+                </span>
+            </div>
+
+            <p>
+                Now, open the <code>src/main.rt</code> file in your favorite text editor and enter the following code:
+            </p>
+            <pre><code class="rotor">
+use std.io [console]
+pub fn main() i32 {
+    console.out("Rotor is spinning!");
+    return 0;
+}
+            </code></pre>
+
+            <p>
+                Once you’ve added that code, you’re ready to run your first Rotor program. 🎉
+                To do this, navigate to the <code>my_first_project</code> directory in your terminal and run:
+            </p>
+            <pre><code>rotor run</code></pre>
+            <div class="tip">
+                <img src="assets/hint.png" alt="Hint" />
+                <span>
+                    <strong>Tip:</strong> Since rotor is still in development, running is not currently supported yet, but it is in the works!
+                </span>
+            </div>
+            <p>
+                If we see the output <code>Rotor is spinning!</code> in your terminal, congratulations, everything is working successfully!
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>
