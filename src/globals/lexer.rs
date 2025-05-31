@@ -129,6 +129,10 @@ pub fn lex(source: &str) -> Lexed {
                     "let" => tokens.push(Token::new(TokenKind::Let, identifier, line, start_column, start_pos)),
                     "i32" => tokens.push(Token::new(TokenKind::I32, identifier, line, start_column, start_pos)),
                     "f32" => tokens.push(Token::new(TokenKind::Float, identifier, line, start_column, start_pos)),
+                    "bool" => tokens.push(Token::new(TokenKind::BOOL, identifier, line, start_column, start_pos)),
+                    "true" => tokens.push(Token::new(TokenKind::Boolean, identifier, line, start_column, start_pos)),
+                    "false" => tokens.push(Token::new(TokenKind::Boolean, identifier, line, start_column, start_pos)),
+                    "use" => tokens.push(Token::new(TokenKind::Use, identifier, line, start_column, start_pos)),
                     _ => tokens.push(Token::new(TokenKind::Identifier, identifier, line, start_column, start_pos)),
                 }
             }

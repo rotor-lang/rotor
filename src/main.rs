@@ -1,6 +1,6 @@
 mod globals;
 
-use globals::lexer::{Token, TokenKind, lex};
+use globals::lexer::{lex};
 use globals::handle_error::{ErrorKind, Error};
 // use reqwest::header::{ACCEPT, AUTHORIZATION, HeaderMap, HeaderValue};
 // use tokio;

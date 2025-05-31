@@ -115,6 +115,13 @@ a:hover {
     color: #665500;
 }
 
+.tip code {
+    color: #d51515;
+    background: none;
+    padding: 0;
+    font-weight: bold;
+}
+
 /* Directory tree */
 .directory-tree {
     font-family: monospace;
