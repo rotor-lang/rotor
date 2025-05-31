@@ -5,20 +5,55 @@ use crate::globals::handle_error::{ErrorKind, Error};
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum TokenKind {
+    // Keywords
     Let,
     Use,
-    Identifier,
+
+    // Types
     I32,
     BOOL,
-    Equal,
+    
+
+    // Identifiers & Literals
+    Identifier,
     Integer,
+    String, // In the future, may require extra data for string type (e.g. raw, format, etc.)
     Float,
-    String, // In the future it will require extra data for containing the type of string (e.g. raw, format, etc.)
-    // String(char),
     Boolean,
+
+    // Symbols
+    Equal,
     Semicolon,
     Colon,
-    Newline
+    Newline,
+
+    // Parentheses
+    LParen,
+    RParen,
+    LCurly,
+    RCurly,
+    LSquare,
+    RSquare,
+
+    // Operators
+    Plus,
+    Minus,
+    Multiply,
+    Divide,
+    Modulus,
+    And,
+    Or,
+    Not,
+
+    // Comparison
+    GreaterThan,
+    LessThan,
+    GreaterThanOrEqual,
+    LessThanOrEqual,
+    EqualEqual,
+    NotEqual,
+
+
 }
 
 
@@ -76,6 +111,27 @@ impl Token {
             TokenKind::Semicolon => self.value == ";",
             TokenKind::Colon => self.value == ":",
             TokenKind::Newline => self.value == "\n",
+            TokenKind::LParen => self.value == "(",
+            TokenKind::RParen => self.value == ")",
+            TokenKind::LCurly => self.value == "{",
+            TokenKind::RCurly => self.value == "}",
+            TokenKind::LSquare => self.value == "[",
+            TokenKind::RSquare => self.value == "]",
+            TokenKind::Plus => self.value == "+",
+            TokenKind::Minus => self.value == "-",
+            TokenKind::Multiply => self.value == "*",
+            TokenKind::Divide => self.value == "/",
+            TokenKind::Modulus => self.value == "%",
+            TokenKind::And => self.value == "&&",
+            TokenKind::Or => self.value == "||",
+            TokenKind::Not => self.value == "!",
+            TokenKind::GreaterThan => self.value == ">",
+            TokenKind::LessThan => self.value == "<",
+            TokenKind::GreaterThanOrEqual => self.value == ">=",
+            TokenKind::LessThanOrEqual => self.value == "<=",
+            TokenKind::EqualEqual => self.value == "==",
+            TokenKind::NotEqual => self.value == "!=",
+            _ => false,
         }
     }
 
