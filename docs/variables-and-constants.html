@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>03. Variables and Constants - Rotor</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <div class="sidebar">
+            <span class="version">v0.1.0-unrelease1.1</span>
+            <h2>Rotor Docs</h2>
+            <a href="getting-started.html">01. Getting Started</a>
+            <a href="hello-rotor.html">02. Hello, Rotor!</a>
+            <a href="variables-and-constants.html" class="active">03. Variables and Constants</a>
+        </div>
+
+        <div class="content">
+            <h1>Understanding variables and constants</h1>
+
+            <p>
+                Since that we've created our first Rotor project, let's dive into all the juicy parts of programming and how to use the Rotor toolchain.
+                In this document, we’ll cover the basics of variables and constants.
+                These are super important in programming — you’ll be using them all the time. So let’s jump in!
+            </p>
+
+            <h2>Variables</h2>
+            <p>
+                If you’ve done any programming before, you probably already know what a variable is.
+                A variable, in the simplest terms, is a thing that stores stuff.
+                That’s a super broad definition, but honestly, it's accurate most of the time.
+                For example, if I wanted to store my age, I could make a variable called <code>age</code> and assign it a value.
+                In Rotor, that would look like:
+                <code>let age = 18;</code>
+                So what’s happening here? We're creating a variable called <code>age</code> and assigning it the value <code>18</code>.
+                Most modern languages work the same way.
+                The keyword <code>let</code> just tells Rotor “Hey, I’m making a variable here,” and gives it a value to start with.
+            </p>
+
+            <h2>Constants</h2>
+            <p>
+                Constants are like variables, but with one big difference: once you set them, you can’t change them.
+                You might ask, “Why use a constant when I can just use a variable?” That’s a great question, and a lot of beginners ask the same thing.
+            </p>
+            <div class="tip">
+                <img src="assets/hint.png" alt="Hint" />
+                <span>
+                    <strong>Tip:</strong> This part will be a bit more technical, but don't worry if it feels a bit confusing at first. This will make more sense as you get deeper into programming.
+                </span>
+            </div>
+            <p>
+                Basically, when you know something won’t ever change, using a constant helps make your code more predictable.
+                It also lets the compiler do smart optimizations.
+                For example, in a low-level language like C, you could write something like:
+            </p>
+            <pre><code>#include &lt;stdint.h&gt;
+int main() {
+    uint8_t *ptr = (uint8_t *)0x12345678;
+    *ptr = 18;
+    return 0;
+}</code></pre>
+            <p>
+                That’s a direct memory write — kinda wild, right? It’s risky, unreadable, and error-prone. 
+                Using variables and constants helps avoid all that mess. The compiler figures out the best way to store your values, 
+                and you get to write readable code.
+            </p>
+            <p>
+                So, back to constants — if you know a value won’t change, like the value of pi, use a constant. 
+                In Rotor, you’d do it like this:
+                <code>const PI = 3.14;</code>
+                That tells the compiler “Yo, this value is locked in forever,” and it can optimize your code with that in mind.
+                (And let’s be real — pi’s not changing anytime soon.)
+            </p>
+
+            <h2>Conclusion</h2>
+            <p>
+                Variables can *feel* tricky at first, but don’t stress — we’re just getting started.
+                Once you get the hang of assigning values and knowing when to use a variable vs a constant, you're good.
+                Later on, we’ll get into more advanced stuff like pointers, references, and all the juicy low-level magic.
+                But for now, just remember: a variable is a name for a value you might change, and a constant is one that stays the same.
+                That’s it. You got this.
+            </p>
+        </div>
+
+</body>
+</html>

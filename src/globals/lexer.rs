@@ -59,10 +59,10 @@ pub enum TokenKind {
 
 #[derive(Debug)]
 pub struct Token {
-    kind: TokenKind,
-    value: String,
-    line: usize,
-    column: usize,
+    pub kind: TokenKind,
+    pub value: String,
+    pub line: usize,
+    pub column: usize,
     pos: usize
 }
 
