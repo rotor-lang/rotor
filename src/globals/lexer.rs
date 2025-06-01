@@ -155,20 +155,63 @@ pub fn lex(source: &str) -> Lexed {
         let ch: char = chars[pos];
 
         match ch {
-            '=' => {
-                tokens.push(Token::new(TokenKind::Equal, "=", line, column, pos));
+            // WARNING: 
+            // The following match arms are not special
+            // so they only need to be eaten and not
+            // have any extra logic for them.
+            '=' | ';' | ':' | '(' | ')' | '{' | '}' | '[' | ']' | '+' | '-' | '*' => {
+                let kind = match ch {
+                    '=' => TokenKind::Equal,
+                    ';' => TokenKind::Semicolon,
+                    ':' => TokenKind::Colon,
+                    '(' => TokenKind::LParen,
+                    ')' => TokenKind::RParen,
+                    '{' => TokenKind::LCurly,
+                    '}' => TokenKind::RCurly,
+                    '[' => TokenKind::LSquare,
+                    ']' => TokenKind::RSquare,
+                    '+' => TokenKind::Plus,
+                    '-' => TokenKind::Minus,
+                    '*' => TokenKind::Multiply,
+                    _ => unreachable!(), // Oopsie daisys, you shouldn't be here. Now suffer a terrible error message.
+                    
+                };
+                tokens.push(Token::new(kind, ch.to_string(), line, column, pos));
                 pos += 1;
                 column += 1;
             }
-            ';' => {
-                tokens.push(Token::new(TokenKind::Semicolon, ";", line, column, pos));
-                pos += 1;
-                column += 1;
-            }
-            ':' => {
-                tokens.push(Token::new(TokenKind::Colon, ":", line, column, pos));
-                pos += 1;
-                column += 1;
+            '/' => {
+                if pos + 1 < chars.len() && chars[pos + 1] == '/' {
+                    // Single-line comment
+                    pos += 2;
+                    column += 2;
+                    while pos < chars.len() && chars[pos] != '\n' {
+                        pos += 1;
+                        column += 1;
+                    }
+                } else if pos + 1 < chars.len() && chars[pos + 1] == '*' {
+                    // Multi-line comment
+                    pos += 2;
+                    column += 2;
+                    while pos < chars.len() {
+                        if pos + 1 < chars.len() && chars[pos] == '*' && chars[pos + 1] == '/' {
+                            pos += 2;
+                            column += 2;
+                            break;
+                        }
+                        if chars[pos] == '\n' {
+                            line += 1;
+                            column = 1;
+                        } else {
+                            column += 1;
+                        }
+                        pos += 1;
+                    }
+                } else {
+                    tokens.push(Token::new(TokenKind::Divide, "/", line, column, pos));
+                    pos += 1;
+                    column += 1;
+                }
             }
             c if c.is_alphabetic() || c == '_' => {
                 let start_column = column;
@@ -246,10 +289,10 @@ pub fn lex(source: &str) -> Lexed {
             _ => {
                 Error::new(
                     ErrorKind::InvalidToken,
-                    format!("Invalid token({}, {}): {}", line, column, ch),
-                    line,
-                    column,
-                ).push_new(&mut errors);
+                    format!("Invalid token({}, {}): {}", line, column, ch), //                      o        o
+                    line, //                                                                                     |               <- this is gerald. dont be mean to him.
+                    column, //                                                                                 \___/                he's really nice and helpful.
+                ).push_new(&mut errors); //                                                                            so don't hurt him or i will hurt you. >:(
                 pos += 1;
                 column += 1;
             }

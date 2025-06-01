@@ -14,17 +14,21 @@ fn main() {
     
     if args.len() < 2  {
         println!("Use --help for information on commands.");
-        panic!();
     }
 
     if args[1] == "--help" {
-        println!("Usage: {} [OPTIONS] [FILE]", args[0]);
+        println!("Usage: rotor [OPTIONS] [FILE]");
+        println!("------------------------------------------");
+        println!("WARNING: This is an early version of the program, and it is not yet fully functional.");
+        println!("Only the --lex option has been implemented so far.");
+        println!("------------------------------------------");
         println!("Options:");
         println!("  --help       Show this help message");
         println!("  --version    Show the version of the program");
         println!("  --run        Run the specified file");
         println!("  --compile    Compile the specified file");
         println!("  --debug      Debug the specified file");
+        println!("  --lex        Lex the specified file");
         println!("---------------------------------------");
     } else if args[1] == "--version" {
         println!("Version: {}", "v0.1.0-unrelease1.1");
