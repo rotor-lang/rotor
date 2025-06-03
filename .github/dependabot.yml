@@ -4,7 +4,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-      time: "*/1 * * * *"
+      time: "07:57"
+
 
   - package-ecosystem: "devcontainers"
     directory: "/.devcontainer"
