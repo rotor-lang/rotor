@@ -1,0 +1,15 @@
+{
+  "name": "Rotor Devcontainer",
+  "image": "mcr.microsoft.com/vscode/devcontainers/rust:1",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+      },
+      "extensions": [
+        "rust-lang.rust-analyzer"
+      ]
+    }
+  },
+  "postCreateCommand": "cargo build"
+}
