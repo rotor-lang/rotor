@@ -3,4 +3,10 @@ updates:
   - package-ecosystem: "cargo"
     directory: "/"
     schedule:
-      interval: "live"
+      interval: "daily"
+      time: "*/1 * * * *"
+
+  - package-ecosystem: "devcontainers"
+    directory: "/.devcontainer"
+    schedule:
+      interval: "daily"
