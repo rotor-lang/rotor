@@ -1,7 +1,7 @@
 // Copyright (c) 2025, Rotor Language Project
 // All rights reserved.
 
-use crate::globals::handle_error::{ErrorKind, Error};
+use crate::handle_error::{ErrorKind, Error};
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum TokenKind {
@@ -300,4 +300,3 @@ pub fn lex(source: &str) -> Lexed {
     }
     Lexed { tokens, errors }
 }
-

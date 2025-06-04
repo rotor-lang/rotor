@@ -1,6 +1,16 @@
 [package]
 name = "rotor"
-version = "0.1.0-alpha.1"
+version = "0.1.0"
 edition = "2021"
+license = "zlib/libpng"
+description = "Rotor language toolchain"
 
 [dependencies]
+# add your crates here if needed
+
+[lib]
+path = "toolchain/lib.rs"
+
+[[bin]]
+name = "rotor"
+path = "toolchain/main.rs"

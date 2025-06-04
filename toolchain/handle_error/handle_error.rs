@@ -1,3 +1,6 @@
+// Copyright (c) 2025, Rotor Language Project
+// All rights reserved.
+
 #[derive(Debug, Clone)]
 pub enum ErrorKind {
     InvalidToken,
