@@ -9,6 +9,16 @@ pub enum Stmt {
     UseStmt {
         stator: String,
         imports: Array<Literal>,
+    },
+    CallStmt {
+        name: String,
+        args: Vec<Expr>,
+    },
+    FnDecl {
+        name: String,
+        params: Vec<String>,
+        return_t: Option<String>,
+        body: Vec<Stmt>,
     }
 }
 
