@@ -12,6 +12,7 @@ pub enum TokenKind {
     // Types
     I32,
     BOOL,
+    STR,
     
 
     // Identifiers & Literals
@@ -102,6 +103,7 @@ impl Token {
             TokenKind::Use => self.value == "use",
             TokenKind::Identifier => !self.value.is_empty(),
             TokenKind::I32 => self.value == "i32",
+            TokenKind::STR => self.value == "str",
             TokenKind::Equal => self.value == "=",
             TokenKind::Integer => self.value.parse::<i32>().is_ok(),
             TokenKind::Float => self.value.parse::<f32>().is_ok(),
@@ -229,6 +231,7 @@ pub fn lex(source: &str) -> Lexed {
                     "i32" => tokens.push(Token::new(TokenKind::I32, identifier, line, start_column, start_pos)),
                     "f32" => tokens.push(Token::new(TokenKind::Float, identifier, line, start_column, start_pos)),
                     "bool" => tokens.push(Token::new(TokenKind::BOOL, identifier, line, start_column, start_pos)),
+                    "str" => tokens.push(Token::new(TokenKind::STR, identifier, line, start_column, start_pos)),
                     "true" => tokens.push(Token::new(TokenKind::Boolean, identifier, line, start_column, start_pos)),
                     "false" => tokens.push(Token::new(TokenKind::Boolean, identifier, line, start_column, start_pos)),
                     "use" => tokens.push(Token::new(TokenKind::Use, identifier, line, start_column, start_pos)),
