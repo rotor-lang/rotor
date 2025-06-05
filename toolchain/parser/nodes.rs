@@ -6,12 +6,20 @@ pub enum Stmt {
         name: String,
         value: Expr,
     },
+    UseStmt {
+        stator: String,
+        imports: Array<Literal>,
+    }
 }
 
 pub enum Expr {
     Literal {
         kind: TokenKind,    
         value: String,      
+    },
+    Array {
+        elements: Vec<Expr>,
+        length: Option<usize>,
     },
     Variable {
         name: String,
