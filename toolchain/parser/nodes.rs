@@ -1,6 +1,17 @@
 use crate::lexer::{TokenKind, Token};
 use crate::nodes::*;
 
+pub struct Parsed {
+    pub tree: Vec<Stmt>,
+    pub errors: Vec<Error>,
+}
+
+impl Parsed {
+    pub fn new(tree: Vec<Stmt>, errors: Vec<Error>) -> Self {
+        Parsed { tree, errors }
+    }
+}
+
 pub enum Stmt {
     LetStmt {
         name: String,

@@ -54,7 +54,6 @@ pub enum TokenKind {
     EqualEqual,
     NotEqual,
 
-
 }
 
 
