@@ -2,15 +2,74 @@ use crate::parser::nodes::{Expr, Stmt};
 use crate::lexer::{Lexed, Token, TokenKind};
 use crate::handle_error::{Error, ErrorKind};
 
-pub fn parse(tokens: Lexed) -> Parsed {
-    // Assums tokens are not problematic
-    if !tokens.errors.is_empty() {
-        return Parsed {
-            stmts: vec![],
-            errors: tokens.errors,
-        };
+pub struct Parsed {
+    pub stmts: Option<Vec<Stmt>>,
+    pub errors: Vec<Error>,
+}
+
+
+pub fn parsable(lexed: &Lexed) -> bool {
+    // Check if the lexed tokens are valid for parsing
+    lexed.errors.is_empty()
+}
+
+pub fn parse(lexed: &Lexed) -> Parsed {
+    if parsable(lexed) {
+        let mut stmts = Vec::new();
+        let mut errors = Vec::new();
+
+        // Iterate tokens
+        let mut iter = lexed.tokens.iter().peekable();
+
+        // Parse tokens into statements
+        while let Some(token) = iter.next() {
+            match token.kind {
+                TokenKind::Let => {
+                    if let Some(name_token) = iter.next() {
+                        if let TokenKind::Identifier(name) = name_token.kind {
+                            if let Some(eq_token) = iter.next() {
+                                if eq_token.kind == TokenKind::Equal {
+                                    if let Some(value_token) = iter.next() {
+                                        let value_expr = Expr::Literal {
+                                            kind: value_token.kind,
+                                            value: value_token.value.clone(),
+                                        };
+                                        stmts.push(Stmt::LetStmt {
+                                            name,
+                                            value: value_expr,
+                                        });
+                                    } else {
+                                        errors.push(Error::new(
+                                            ErrorKind::UnexpectedEndOfInput,
+                                            "Expected value after '='".to_string(),
+                                        ));
+                                    }
+                                } else {
+                                    errors.push(Error::new(
+                                        ErrorKind::UnexpectedToken,
+                                        format!("Expected '=', found {:?}", eq_token.kind),
+                                    ));
+                                }
+                            } else {
+                                errors.push(Error::new(
+                                    ErrorKind::UnexpectedEndOfInput,
+                                    "Expected '=' after variable name".to_string(),
+                                ));
+                            }
+                        } else {
+                            errors.push(Error::new(
+                                ErrorKind::UnexpectedToken,
+                                format!("Expected identifier, found {:?}", name_token.kind),
+                            ));
+                        }
+                    } else {
+                        errors.push(Error::new(
+                            ErrorKind::UnexpectedEndOfInput,
+                            "Expected variable name after 'let'".to_string(),
+                        ));
+                    }
+                }
+            }
+        }
     }
-    let mut tree = vec![];
-    let mut errors = vec![];
-    let mut iter = tokens.tokens.into_iter().peekable();
 }

@@ -18,7 +18,7 @@ pub enum Stmt {
         value: Expr,
     },
     UseStmt {
-        stator: String,
+        stator: String, // Stators are modules
         imports: Array<Literal>,
     },
     CallStmt {
