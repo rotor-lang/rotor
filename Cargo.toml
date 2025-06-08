@@ -13,4 +13,4 @@ path = "toolchain/lib.rs"
 
 [[bin]]
 name = "rotor"
-path = "toolchain/main.rs"
+path = "toolchain/cli/main.rs"

@@ -7,7 +7,6 @@ pub struct Parsed {
     pub errors: Vec<Error>,
 }
 
-
 pub fn parsable(lexed: &Lexed) -> bool {
     // Check if the lexed tokens are valid for parsing
     lexed.errors.is_empty()
@@ -25,6 +24,7 @@ pub fn parse(lexed: &Lexed) -> Parsed {
         while let Some(token) = iter.next() {
             match token.kind {
                 TokenKind::Let => {
+                    // syntax: let <identifier> = <expression>
                     if let Some(name_token) = iter.next() {
                         if let TokenKind::Identifier(name) = name_token.kind {
                             if let Some(eq_token) = iter.next() {
@@ -36,7 +36,7 @@ pub fn parse(lexed: &Lexed) -> Parsed {
                                         };
                                         stmts.push(Stmt::LetStmt {
                                             name,
-                                            value: value_expr,
+                                            value_expr,
                                         });
                                     } else {
                                         errors.push(Error::new(
@@ -65,11 +65,75 @@ pub fn parse(lexed: &Lexed) -> Parsed {
                     } else {
                         errors.push(Error::new(
                             ErrorKind::UnexpectedEndOfInput,
-                            "Expected variable name after 'let'".to_string(),
+                            format!(
+                                "Expected variable name after 'let', got {:?}",
+                                iter.peek().map(|t| &t.kind)
+                            ),
                         ));
                     }
                 }
+                TokenKind::Use => {
+                    if let Some(stator_token) = iter.next() {
+                        if let TokenKind::Identifier(stator) = stator_token.kind {
+                            if let Some(open_square_token) = iter.next() {
+                                if let TokenKind::LSquare(_) = open_square_token.kind {
+                                    let mut substators = Vec::new();
+
+                                    while let Some(token) = iter.next() {
+                                        match token.kind {
+                                            TokenKind::Identifier(_) => substators.push(token.clone()),
+                                            TokenKind::RSquare => break,
+                                            TokenKind::Comma => continue,
+                                            _ => {
+                                                errors.push(Error::new(
+                                                    ErrorKind::UnexpectedToken,
+                                                    format!("Unexpected token in use imports: {:?}", token.kind),
+                                                ));
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    stmts.push(Stmt::UseStmt {
+                                        stator: stator.clone(),
+                                        imports: substators,
+                                    });
+                                } else {
+                                    errors.push(Error::new(
+                                        ErrorKind::UnexpectedToken,
+                                        format!("Expected '[' after use stator, found {:?}", open_square_token.kind),
+                                    ));
+                                }
+                            } else {
+                                errors.push(Error::new(
+                                    ErrorKind::UnexpectedEndOfInput,
+                                    "Expected '[' after use stator".to_string(),
+                                ));
+                            }
+                        } else {
+                            errors.push(Error::new(
+                                ErrorKind::UnexpectedToken,
+                                format!("Expected identifier after 'use', found {:?}", stator_token.kind),
+                            ));
+                        }
+                    } else {
+                        errors.push(Error::new(
+                            ErrorKind::UnexpectedEndOfInput,
+                            "Expected identifier after 'use'".to_string(),
+                        ));
+                    }
+                }
+                _ => {}
             }
+        }
+        Parsed {
+            stmts: Some(stmts),
+            errors,
+        }
+    } else {
+        Parsed {
+            stmts: None,
+            errors: lexed.errors.clone(),
         }
     }
 }
