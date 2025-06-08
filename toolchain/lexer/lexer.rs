@@ -162,7 +162,7 @@ pub fn lex(source: &str) -> Lexed {
             // The following match arms are not special
             // so they only need to be eaten and not
             // have any extra logic for them.
-            '=' | ';' | ':' | '(' | ')' | '{' | '}' | '[' | ']' | '+' | '-' | '*' => {
+            '=' | ';' | ':' | '(' | ')' | '{' | '}' | '[' | ']' | '+' | '-' | '*' | '%' => {
                 let kind = match ch {
                     '=' => TokenKind::Equal,
                     ';' => TokenKind::Semicolon,
@@ -176,6 +176,7 @@ pub fn lex(source: &str) -> Lexed {
                     '+' => TokenKind::Plus,
                     '-' => TokenKind::Minus,
                     '*' => TokenKind::Multiply,
+                    '%' => TokenKind::Modulus,
                     _ => unreachable!(), // Oopsie daisys, you shouldn't be here. Now suffer a terrible error message.
                     
                 };
