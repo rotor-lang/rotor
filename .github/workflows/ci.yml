@@ -3,7 +3,7 @@ name: Rotor CI Matrix
 on:
   push:
     branches:
-      - main
+      - master
       - 'feature/**'
       - pend_feature
   pull_request:
