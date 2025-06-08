@@ -27,6 +27,7 @@ pub enum TokenKind {
     Semicolon,
     Colon,
     Newline,
+    Comma,
 
     // Parentheses
     LParen,
@@ -111,6 +112,7 @@ impl Token {
             TokenKind::Boolean => self.value == "true" || self.value == "false",
             TokenKind::Semicolon => self.value == ";",
             TokenKind::Colon => self.value == ":",
+            TokenKind::Comma => self.value == ",",
             TokenKind::Newline => self.value == "\n",
             TokenKind::LParen => self.value == "(",
             TokenKind::RParen => self.value == ")",
