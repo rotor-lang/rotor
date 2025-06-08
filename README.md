@@ -104,6 +104,8 @@ If you see a version output, congrats — Rotor is installed!
 
 Rotor is in active development! If you have ideas, bug fixes, or want to help, [open an issue](https://github.com/rotor-lang/rotor/issues) or make a pull request.
 
+Join our Discord community to chat, get help, and hype Rotor up: [Join here!](https://discord.gg/2aV99HRqB2)
+
 #### Contribution news (8/06/2025):
 
 Rotor is only run by me right now, but if you are reading this, I would love for you to help. Of course, you don't have to, but if you want to get help rotor get that little bit further, even if you don't know that much about coding, we can find other ways you can help us! Love to see you soon <3
