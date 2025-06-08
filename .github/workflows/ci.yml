@@ -1,0 +1,39 @@
+# .github/workflows/ci.yml
+name: Rotor CI Matrix
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+      - pend_feature
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        override: true
+
+    - name: Build Rotor
+      run: cargo build --release
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: rotor-${{ matrix.os }}
+        path: |
+          ${{ github.workspace }}/target/release/rotor.exe
+          ${{ github.workspace }}/target/release/rotor
+        if-no-files-found: ignore
