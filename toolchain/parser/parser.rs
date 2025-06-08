@@ -129,16 +129,23 @@ pub fn parse(lexed: &Lexed) -> Parsed {
                     // 1. A parent token followed by a dot and then an identifier (e.g., `parent.child`)
                     // 2. A floating point number (e.g., `3.14`)
                     // We need to see if it's an identifier or a number before the dot.
+                    let mut object: Path;
                     if let Some(parent_token) = iter.previous() {
                         if let TokenKind::Identifier(parent) = parent_token.kind {
-                            // TODO: Do the rest, im too tired rn
-                            // I gotta sleep
-                            // im so tired
-                            // atleast i learnt a bit about branches today
-                            // i learnt why you should create branches
-                            // they're sooo useful, like im not even kidding
-                            // branches are the best thing ever, i have a crush on branches
-                            // uwu,,
+                            object.parent = parent;
+                            while iter.peek().kind == TokenKind::Identifier || iter.peek().kind == TokenKind::Dot {
+                                if let Some(next_token) = iter.next() {
+                                    if let TokenKind::Identifier(child) = next_token.kind {
+                                        object.children.push(child)
+                                    } else if let TokenKind::Dot(dot) = next_token.kind {
+                                        // Do nothing because it's a dot
+                                    } else {
+                                        errors.push()
+                                    }
+                                }
+                            }
+                        } else if let TokenKind::Integer(whole) = parent_token.kind {
+                            // Handle float
                         }
                     }
                 }

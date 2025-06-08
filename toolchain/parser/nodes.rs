@@ -12,6 +12,11 @@ impl Parsed {
     }
 }
 
+pub struct Path {
+    pub parent: Identifier,
+    pub children: Vec<Identifier>
+}
+
 pub enum Stmt {
     LetStmt {
         name: String,
