@@ -9,7 +9,7 @@ pub struct Parsed {
 
 pub fn parsable(lexed: &Lexed) -> bool {
     // Check if the lexed tokens are valid for parsing
-    lexed.errors.is_empty()
+    lexed.errors.is_empty();
 }
 
 pub fn parse(lexed: &Lexed) -> Parsed {
@@ -121,6 +121,25 @@ pub fn parse(lexed: &Lexed) -> Parsed {
                             ErrorKind::UnexpectedEndOfInput,
                             "Expected identifier after 'use'".to_string(),
                         ));
+                    }
+                }
+                TokenKind::Dot => {
+                    // syntax: <parent>.<child>...
+                    // WARNING: There are two cases for this:
+                    // 1. A parent token followed by a dot and then an identifier (e.g., `parent.child`)
+                    // 2. A floating point number (e.g., `3.14`)
+                    // We need to see if it's an identifier or a number before the dot.
+                    if let Some(parent_token) = iter.previous() {
+                        if let TokenKind::Identifier(parent) = parent_token.kind {
+                            // TODO: Do the rest, im too tired rn
+                            // I gotta sleep
+                            // im so tired
+                            // atleast i learnt a bit about branches today
+                            // i learnt why you should create branches
+                            // they're sooo useful, like im not even kidding
+                            // branches are the best thing ever, i have a crush on branches
+                            // uwu,,
+                        }
                     }
                 }
                 _ => {}

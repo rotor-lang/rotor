@@ -28,6 +28,7 @@ pub enum TokenKind {
     Colon,
     Newline,
     Comma,
+    Dot,
 
     // Parentheses
     LParen,
@@ -113,6 +114,7 @@ impl Token {
             TokenKind::Semicolon => self.value == ";",
             TokenKind::Colon => self.value == ":",
             TokenKind::Comma => self.value == ",",
+            TokenKind::Dot => self.value == ".",
             TokenKind::Newline => self.value == "\n",
             TokenKind::LParen => self.value == "(",
             TokenKind::RParen => self.value == ")",
@@ -162,7 +164,7 @@ pub fn lex(source: &str) -> Lexed {
             // The following match arms are not special
             // so they only need to be eaten and not
             // have any extra logic for them.
-            '=' | ';' | ':' | '(' | ')' | '{' | '}' | '[' | ']' | '+' | '-' | '*' | '%' => {
+            '=' | ';' | ':' | '(' | ')' | '{' | '}' | '[' | ']' | '+' | '-' | '*' | '%' | '.' => {
                 let kind = match ch {
                     '=' => TokenKind::Equal,
                     ';' => TokenKind::Semicolon,
@@ -177,6 +179,7 @@ pub fn lex(source: &str) -> Lexed {
                     '-' => TokenKind::Minus,
                     '*' => TokenKind::Multiply,
                     '%' => TokenKind::Modulus,
+                    '.' => TokenKind::Dot,
                     _ => unreachable!(), // Oopsie daisys, you shouldn't be here. Now suffer a terrible error message.
                     
                 };
