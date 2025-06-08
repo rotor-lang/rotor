@@ -1,13 +1,23 @@
 // Copyright (c) 2025, Rotor Language Project
 // All rights reserved.
 
+/// Represents the severity level of an error or log message.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+pub enum Level {
+    Debug,
+    Info,
+    Warning,
+    Error,
+    Critical,
+    Fatal,
+}
 #[derive(Debug, Clone)]
 pub enum ErrorKind {
     InvalidToken,
     UnknownIdentifier,
     UnexpectedToken,
     InvalidEscapeSequence,
-
+    UnterminatedString,
 }
 
 pub struct Error {
