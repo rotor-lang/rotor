@@ -38,7 +38,7 @@
 1. Make sure you have [Rust](https://www.rust-lang.org/tools/install) and [Git](https://git-scm.com/downloads) installed.
 2. Clone the repository:
     ```powershell
-    git clone https://github.com/rotor-lang/rotor.git
+    git clone "https://github.com/rotor-lang/rotor.git"
     cd rotor
     ```
 3. Build the project:
@@ -47,7 +47,7 @@
     ```
 4. Run it:
     ```powershell
-    .\target\release\rotor.exe --version
+    ".\target\release\rotor.exe" --version
     ```
 
 If you see a version output, congrats — Rotor is installed!
@@ -59,7 +59,7 @@ If you see a version output, congrats — Rotor is installed!
 1. Make sure you have [Rust](https://www.rust-lang.org/tools/install) and [Git](https://git-scm.com/downloads) installed.
 2. Clone the repository:
     ```bash
-    git clone https://github.com/rotor-lang/rotor.git
+    git clone "https://github.com/rotor-lang/rotor.git"
     cd rotor
     ```
 3. Build the project:
@@ -82,7 +82,7 @@ If you see a version output, congrats — Rotor is installed!
 1. Make sure you have [Rust](https://www.rust-lang.org/tools/install) and [Git](https://git-scm.com/downloads) installed.
 2. Clone the repository:
     ```bash
-    git clone https://github.com/rotor-lang/rotor.git
+    git clone "https://github.com/rotor-lang/rotor.git"
     cd rotor
     ```
 3. Build the project:
@@ -103,6 +103,10 @@ If you see a version output, congrats — Rotor is installed!
 ### Want to Contribute?
 
 Rotor is in active development! If you have ideas, bug fixes, or want to help, [open an issue](https://github.com/rotor-lang/rotor/issues) or make a pull request.
+
+#### Contribution news (8/06/2025):
+
+Rotor is only run by me right now, but if you are reading this, I would love for you to help. Of course, you don't have to, but if you want to get help rotor get that little bit further, even if you don't know that much about coding, we can find other ways you can help us! Love to see you soon <3
 
 ---
 
