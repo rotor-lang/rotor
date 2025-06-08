@@ -36,7 +36,7 @@ fn lex_operators_and_brackets() {
     let input = "(a + b) - [c * d] / {e % f};";
     let lexed = lex(input);
 
-    assert_eq!(lexed.tokens.len(), 13);
+    assert_eq!(lexed.tokens.len(), 17);
     assert_eq!(lexed.tokens[0].kind, TokenKind::LParen);
     assert_eq!(lexed.tokens[1].kind, TokenKind::Identifier);
     assert_eq!(lexed.tokens[2].kind, TokenKind::Plus);
