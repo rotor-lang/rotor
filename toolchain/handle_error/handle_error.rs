@@ -16,6 +16,8 @@ pub enum ErrorKind {
     InvalidToken,
     UnknownIdentifier,
     UnexpectedToken,
+    LexError,
+    UnexpectedEndOfInput,
     InvalidEscapeSequence,
     UnterminatedString,
 }

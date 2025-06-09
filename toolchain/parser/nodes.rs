@@ -1,5 +1,5 @@
 use crate::lexer::{TokenKind, Token};
-use crate::nodes::*;
+use crate::handle_error::{Error, ErrorKind};
 
 pub struct Parsed {
     pub tree: Vec<Stmt>,
@@ -13,8 +13,8 @@ impl Parsed {
 }
 
 pub struct Path {
-    pub parent: Identifier,
-    pub children: Vec<Identifier>
+    pub parent: TokenKind,
+    pub children: Vec<TokenKind>
 }
 
 pub enum Stmt {
@@ -24,7 +24,7 @@ pub enum Stmt {
     },
     UseStmt {
         stator: String, // Stators are modules
-        imports: Array<Literal>,
+        imports: Vec<Expr>,
     },
     CallStmt {
         name: String,
