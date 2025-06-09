@@ -6,12 +6,9 @@ use rotor::lexer::{lex};
 
 // const CURRENT_VERSION: &str = "v0.1.0-unrelease1";
 
-const TEST_MODE: bool = true;
-
 //#[tokio::main]
 fn main() {
-    if !TEST_MODE {
-        let args = std::env::args().collect::<Vec<_>>();
+    let args = std::env::args().collect::<Vec<_>>();
     
     if args.len() < 2  {
         println!("Use --help for information on commands.");
@@ -57,9 +54,6 @@ fn main() {
         println!("Installing is not yet implemented.")
     } else {
         println!("Unknown command: {}", args[1]);
-    }
-    } else {
-        
     }
 }
 

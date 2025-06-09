@@ -3,7 +3,7 @@
 
 use crate::handle_error::{ErrorKind, Error};
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum TokenKind {
     // Keywords
     Let,
