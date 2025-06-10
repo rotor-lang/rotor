@@ -12,6 +12,7 @@ fn main() {
     
     if args.len() < 2  {
         println!("Use --help for information on commands.");
+        std::process::exit(1);
     }
 
     if args[1] == "--help" {

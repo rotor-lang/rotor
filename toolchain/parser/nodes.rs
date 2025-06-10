@@ -1,5 +1,9 @@
 use crate::lexer::{TokenKind, Token};
-use crate::nodes::*;
+
+pub struct Path {
+    pub parent: Identifier,
+    pub children: Vec<Identifier>
+}
 
 pub struct Parsed {
     pub tree: Vec<Stmt>,
@@ -58,4 +62,7 @@ pub enum Expr {
         name: String,
         args: Vec<Expr>,
     },
+    Identifier {
+        name: String
+    }
 }
