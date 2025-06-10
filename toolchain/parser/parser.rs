@@ -151,6 +151,7 @@ pub fn parse(lexed: &Lexed) -> Parsed {
                 }
                 _ => {}
             }
+            let prev_token = token;
         }
         Parsed {
             stmts: Some(stmts),
