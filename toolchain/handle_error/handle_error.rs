@@ -20,21 +20,24 @@ pub enum ErrorKind {
     UnterminatedString,
 }
 
+#[allow(dead_code)]
 pub struct Error {
     kind: ErrorKind,
     message: String,
     line: usize,
     column: usize,
+    pos: usize,
     file_name: String
 }
 
 impl Error {
-    pub fn new(kind: ErrorKind, message: impl Into<String>, line: usize, column: usize) -> Self {
+    pub fn new(kind: ErrorKind, message: impl Into<String>, line: usize, column: usize, pos: usize) -> Self {
         Error {
             kind,
             message: message.into(),
             line,
             column,
+            pos,
             file_name: String::new(),
         }
     }

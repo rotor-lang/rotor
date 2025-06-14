@@ -61,6 +61,7 @@ pub enum TokenKind {
 
 
 #[derive(Debug)]
+#[allow(dead_code)]
 pub struct Token {
     pub kind: TokenKind,
     pub value: String,
@@ -137,7 +138,6 @@ impl Token {
             TokenKind::LessThanOrEqual => self.value == "<=",
             TokenKind::EqualEqual => self.value == "==",
             TokenKind::NotEqual => self.value == "!=",
-            _ => false,
         }
     }
 
@@ -220,13 +220,7 @@ pub fn lex(source: &str) -> Lexed {
                     column += 1;
                 }
             }
-            '.' => {
-                if pos + 1 < chars.len() && chars[pos + 1] == '.' {
-                    // Range symbol
-                    pos += 2;
-                    column += 2;
-                }
-            }
+            // The '.' character is already handled in the first match arm above.
             c if c.is_alphabetic() || c == '_' => {
                 let start_column = column;
                 let start_pos: usize = pos;
@@ -305,9 +299,10 @@ pub fn lex(source: &str) -> Lexed {
                 Error::new(
                     ErrorKind::InvalidToken,
                     format!("Invalid token({}, {}): {}", line, column, ch), //                      o        o
-                    line, //                                                                                     |               <- this is gerald. dont be mean to him.
+                    line, //                                                                                     |               <- this is gart. dont be mean to him.
                     column, //                                                                                 \___/                he's really nice and helpful.
-                ).push_new(&mut errors); //                                                                            so don't hurt him or i will hurt you. >:(
+                    pos, //                                                                                                         so don't hurt him or i will hurt you. >:(
+                ).push_new(&mut errors); 
                 pos += 1;
                 column += 1;
             }
