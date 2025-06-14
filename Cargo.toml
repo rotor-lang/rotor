@@ -6,7 +6,9 @@ license = "zlib/libpng"
 description = "Rotor language toolchain"
 
 [dependencies]
-# add your crates here if needed
+
+[dev-dependencies]
+divan = { package = "codspeed-divan-compat", version = "*" }
 
 [lib]
 path = "toolchain/lib.rs"
@@ -14,3 +16,7 @@ path = "toolchain/lib.rs"
 [[bin]]
 name = "rotor"
 path = "toolchain/cli/main.rs"
+
+[[bench]]
+name = "lexer"
+harness = false

@@ -23,6 +23,8 @@ pub enum TokenKind {
     Boolean,
 
     // Symbols
+    Dot,
+    Range,
     Equal,
     Semicolon,
     Colon,
@@ -79,10 +81,9 @@ impl Lexed {
         }
     }
     pub fn is_working(&self) -> bool {
-        if self.errors.len() == 0 {
-            return true;
-        }
-        return false;
+        self.errors.is_empty()
+        ||
+        self.tokens.iter().all(|token| token.is_valid())
     }
 }
 
@@ -110,6 +111,8 @@ impl Token {
             TokenKind::String => self.value.starts_with('"') && self.value.ends_with('"'),
             TokenKind::BOOL => self.value == "bool",
             TokenKind::Boolean => self.value == "true" || self.value == "false",
+            TokenKind::Dot => self.value == ".",
+            TokenKind::Range => self.value == "..",
             TokenKind::Semicolon => self.value == ";",
             TokenKind::Colon => self.value == ":",
             TokenKind::Comma => self.value == ",",
@@ -215,6 +218,13 @@ pub fn lex(source: &str) -> Lexed {
                     tokens.push(Token::new(TokenKind::Divide, "/", line, column, pos));
                     pos += 1;
                     column += 1;
+                }
+            }
+            '.' => {
+                if pos + 1 < chars.len() && chars[pos + 1] == '.' {
+                    // Range symbol
+                    pos += 2;
+                    column += 2;
                 }
             }
             c if c.is_alphabetic() || c == '_' => {
