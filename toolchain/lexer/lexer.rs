@@ -155,10 +155,10 @@ pub fn lex(source: &str) -> Lexed {
     let mut line: usize = 1;
     let mut column: usize = 1;
     let mut pos: usize = 0;
-    let chars: Vec<char> = source.chars().collect();
+    let chars: &[u8] = source.as_bytes();
 
     while pos < chars.len() {
-        let ch: char = chars[pos];
+        let ch: char = chars[pos] as char;
 
         match ch {
             // WARNING: 
@@ -188,25 +188,25 @@ pub fn lex(source: &str) -> Lexed {
                 column += 1;
             }
             '/' => {
-                if pos + 1 < chars.len() && chars[pos + 1] == '/' {
+                if pos + 1 < chars.len() && chars[pos + 1] == b'/' {
                     // Single-line comment
                     pos += 2;
                     column += 2;
-                    while pos < chars.len() && chars[pos] != '\n' {
+                    while pos < chars.len() && chars[pos] != b'\n' {
                         pos += 1;
                         column += 1;
                     }
-                } else if pos + 1 < chars.len() && chars[pos + 1] == '*' {
+                } else if pos + 1 < chars.len() && chars[pos + 1] == b'*' {
                     // Multi-line comment
                     pos += 2;
                     column += 2;
                     while pos < chars.len() {
-                        if pos + 1 < chars.len() && chars[pos] == '*' && chars[pos + 1] == '/' {
+                        if pos + 1 < chars.len() && chars[pos] == b'*' && chars[pos + 1] == b'/' {
                             pos += 2;
                             column += 2;
                             break;
                         }
-                        if chars[pos] == '\n' {
+                        if chars[pos] == b'\n' {
                             line += 1;
                             column = 1;
                         } else {
@@ -226,8 +226,8 @@ pub fn lex(source: &str) -> Lexed {
                 let start_pos: usize = pos;
                 let mut identifier = String::new();
 
-                while pos < chars.len() && (chars[pos].is_alphanumeric() || chars[pos] == '_') {
-                    identifier.push(chars[pos]);
+                while pos < chars.len() && ((chars[pos] as char).is_alphanumeric() || chars[pos] == b'_') {
+                    identifier.push(chars[pos] as char);
                     pos += 1;
                     column += 1;
                 }
@@ -250,14 +250,14 @@ pub fn lex(source: &str) -> Lexed {
                 let mut number = String::new();
                 let mut other_numeric_type: TokenKind = TokenKind::Integer;
 
-                while pos < chars.len() && chars[pos].is_digit(10) {
-                    if chars[pos] == '.' && other_numeric_type == TokenKind::Integer {
+                while pos < chars.len() && (chars[pos] as char).is_digit(10) {
+                    if chars[pos] == b'.' && other_numeric_type == TokenKind::Integer {
                         other_numeric_type = TokenKind::Float;
                         number.push('.');
                         pos += 1;
                         column += 1;
                     } else {
-                        number.push(chars[pos]);
+                        number.push(chars[pos] as char);
                         pos += 1;
                         column += 1;
                     }
@@ -284,8 +284,8 @@ pub fn lex(source: &str) -> Lexed {
                 let mut string = String::new();
                 pos += 1;
                 column += 1;
-                while pos < chars.len() && chars[pos] != '\"' {
-                    string.push(chars[pos]);
+                while pos < chars.len() && chars[pos] != b'\"' {
+                    string.push(chars[pos] as char);
                     pos += 1;
                     column += 1;
                 }
