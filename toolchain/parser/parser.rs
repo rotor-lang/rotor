@@ -7,13 +7,8 @@ pub struct Parsed {
     pub errors: Vec<Error>,
 }
 
-pub fn parsable(lexed: &Lexed) -> bool {
-    // Check if the lexed tokens are valid for parsing
-    lexed.errors.is_empty()
-}
-
 pub fn parse(lexed: &Lexed) -> Parsed {
-    if parsable(lexed) {
+    if lexed.is_working() {
         let mut stmts = Vec::new();
         let mut errors = Vec::new();
 
