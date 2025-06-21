@@ -1,6 +1,6 @@
 // Copyright (c) 2025, Rotor Language Project
 // All rights reserved.
-
+use std::fmt;
 use crate::handle_error::{ErrorKind, Error};
 
 #[derive(Debug, PartialEq, Eq)]
@@ -73,6 +73,57 @@ pub struct Token {
 pub struct Lexed {
     pub tokens: Vec<Token>,
     pub errors: Vec<String>
+}
+
+impl fmt::Display for TokenKind {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let s = match self {
+            TokenKind::Let => "let",
+            TokenKind::Use => "use",
+
+            TokenKind::I32 => "i32",
+            TokenKind::BOOL => "bool",
+            TokenKind::STR => "str",
+
+            TokenKind::Identifier => "identifier",
+            TokenKind::Integer => "integer",
+            TokenKind::String => "string",
+            TokenKind::Float => "float",
+            TokenKind::Boolean => "boolean",
+
+            TokenKind::Dot => ".",
+            TokenKind::Range => "..",
+            TokenKind::Equal => "=",
+            TokenKind::Semicolon => ";",
+            TokenKind::Colon => ":",
+            TokenKind::Newline => "\\n",
+            TokenKind::Comma => ",",
+
+            TokenKind::LParen => "(",
+            TokenKind::RParen => ")",
+            TokenKind::LCurly => "{",
+            TokenKind::RCurly => "}",
+            TokenKind::LSquare => "[",
+            TokenKind::RSquare => "]",
+
+            TokenKind::Plus => "+",
+            TokenKind::Minus => "-",
+            TokenKind::Multiply => "*",
+            TokenKind::Divide => "/",
+            TokenKind::Modulus => "%",
+            TokenKind::And => "&&",
+            TokenKind::Or => "||",
+            TokenKind::Not => "!",
+
+            TokenKind::GreaterThan => ">",
+            TokenKind::LessThan => "<",
+            TokenKind::GreaterThanOrEqual => ">=",
+            TokenKind::LessThanOrEqual => "<=",
+            TokenKind::EqualEqual => "==",
+            TokenKind::NotEqual => "!=",
+        };
+        write!(f, "{}", s)
+    }
 }
 
 impl Lexed {
@@ -301,8 +352,7 @@ pub fn lex(source: &str) -> Lexed {
                     format!("Invalid token({}, {}): {}", line, column, ch), //                      o        o
                     line, //                                                                                     |               <- this is gart. dont be mean to him.
                     column, //                                                                                 \___/                he's really nice and helpful.
-                    pos, //                                                                                                         so don't hurt him or i will hurt you. >:(
-                ).push_new(&mut errors); 
+                ).push_new(&mut errors);  //                                                                           so don't hurt him or i will hurt you. >:(
                 pos += 1;
                 column += 1;
             }

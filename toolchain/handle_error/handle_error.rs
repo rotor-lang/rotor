@@ -16,6 +16,7 @@ pub enum ErrorKind {
     InvalidToken,
     UnknownIdentifier,
     UnexpectedToken,
+    UnexpectedEof,
     InvalidEscapeSequence,
     UnterminatedString,
 }
@@ -26,19 +27,15 @@ pub struct Error {
     message: String,
     line: usize,
     column: usize,
-    pos: usize,
-    file_name: String
 }
 
 impl Error {
-    pub fn new(kind: ErrorKind, message: impl Into<String>, line: usize, column: usize, pos: usize) -> Self {
+    pub fn new(kind: ErrorKind, message: impl Into<String>, line: usize, column: usize) -> Self {
         Error {
             kind,
             message: message.into(),
             line,
             column,
-            pos,
-            file_name: String::new(),
         }
     }
 
