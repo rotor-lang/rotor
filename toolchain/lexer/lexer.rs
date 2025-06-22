@@ -7,6 +7,7 @@ use crate::handle_error::{ErrorKind, Error};
 pub enum TokenKind {
     // Keywords
     Let,
+    Const,
     Use,
 
     // Types
@@ -79,6 +80,7 @@ impl fmt::Display for TokenKind {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             TokenKind::Let => "let",
+            TokenKind::Const => "const",
             TokenKind::Use => "use",
 
             TokenKind::I32 => "i32",
@@ -153,6 +155,7 @@ impl Token {
     pub fn is_valid(&self) -> bool {
         match self.kind {
             TokenKind::Let => self.value == "let",
+            TokenKind::Const => self.value == "const",
             TokenKind::Use => self.value == "use",
             TokenKind::Identifier => !self.value.is_empty(),
             TokenKind::I32 => self.value == "i32",
@@ -285,6 +288,7 @@ pub fn lex(source: &str) -> Lexed {
 
                 match identifier.as_str() {
                     "let" => tokens.push(Token::new(TokenKind::Let, identifier, line, start_column, start_pos)),
+                    "const" => tokens.push(Token::new(TokenKind::Const, identifier, line, start_column, start_pos)),
                     "i32" => tokens.push(Token::new(TokenKind::I32, identifier, line, start_column, start_pos)),
                     "f32" => tokens.push(Token::new(TokenKind::Float, identifier, line, start_column, start_pos)),
                     "bool" => tokens.push(Token::new(TokenKind::BOOL, identifier, line, start_column, start_pos)),
