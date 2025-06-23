@@ -1,6 +1,6 @@
 use std::iter::Peekable;
 use crate::lexer::{Token, TokenKind};
-use crate::parser::nodes::{Expr, Stmt};
+use crate::parser::nodes::{Expr, Stmt, UseImports};
 use crate::handle_error::{ErrorKind, Error};
 
 pub struct TokenStream {
@@ -60,6 +60,16 @@ impl TokenStream {
 
 // Parsing helpers
 ///////////////////////////////////////////////////////////////////////////////////
+// Template for helper functions (if you need it)
+
+/*
+
+pub fn p_STMTNAME(stream: &mut TokenStream) -> Result<Stmt, Error> {
+    
+}
+
+*/
+
 pub fn p_LetStmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
     // syntax: (let|const) name[: type] = expr;
     stream.expect_either(vec![TokenKind::Let, TokenKind::Const]);
@@ -81,12 +91,12 @@ pub fn p_LetStmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
 
     stream.expect(TokenKind::Equal)?;
 
-    let valueToken = stream.expect(TokenKind::Integer)?;
+    let value_token = stream.expect(TokenKind::Integer)?;
     //TODO: Add expression parsing
     // For now, it's only integers
     let value = Box::new(Expr::Literal {
         kind: TokenKind::Integer,
-        value: valueToken.value
+        value: value_token.value
     });
 
     // Can't forget the semi-colon
@@ -98,3 +108,43 @@ pub fn p_LetStmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
         value,
     })
 }  
+
+pub fn p_UseStmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
+    // syntax: use stator [(import|*), [import], [import], ...]
+    stream.expect(TokenKind::Use);
+    let stator = stream.expect(TokenKind::Identifier);
+    
+    // Open square
+    stream.expect(TokenKind::LSquare);
+
+    // Loop until found closing square
+    // But maybe also wildcard, idk
+    let mut imports = UseImports::List(vec![]);
+    let mut import_list: Vec<String> = vec![];
+    loop {
+        let curr = stream.next().unwrap();
+
+        if curr.kind == TokenKind::RSquare {
+            // if the wildcard is used, then we dump the list
+            if let UseImports::Wildcard = imports {
+                return Ok(Stmt::UseStmt { stator: stator.unwrap().value, imports: imports })
+            } else {
+                return Ok(Stmt::UseStmt { stator: stator.unwrap().value, imports: UseImports::List(import_list) })
+            }
+        } else if curr.kind == TokenKind::Multiply {
+            imports = UseImports::Wildcard;
+        } else if curr.kind == TokenKind::Identifier {
+            import_list.push(curr.value);
+        } else if curr.kind == TokenKind::Comma {
+            // do nothing, becuase what is there to do
+            continue;
+        } else {
+            return Err(Error::new(
+                ErrorKind::InvalidToken, 
+                format!("Expected either ']', ',' or identifier, found {}", curr.kind),
+                curr.line,
+                curr.column
+            ))
+        }
+    }
+}
