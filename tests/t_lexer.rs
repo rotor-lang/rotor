@@ -42,13 +42,13 @@ fn lex_operators_and_brackets() {
     assert_eq!(lexed.tokens[2].kind, TokenKind::Plus);
     assert_eq!(lexed.tokens[3].kind, TokenKind::Identifier);
     assert_eq!(lexed.tokens[4].kind, TokenKind::RParen);
-    assert_eq!(lexed.tokens[5].kind, TokenKind::Minus);
+    assert_eq!(lexed.tokens[5].kind, TokenKind::Line);
     assert_eq!(lexed.tokens[6].kind, TokenKind::LSquare);
     assert_eq!(lexed.tokens[7].kind, TokenKind::Identifier);
-    assert_eq!(lexed.tokens[8].kind, TokenKind::Multiply);
+    assert_eq!(lexed.tokens[8].kind, TokenKind::Star);
     assert_eq!(lexed.tokens[9].kind, TokenKind::Identifier);
     assert_eq!(lexed.tokens[10].kind, TokenKind::RSquare);
-    assert_eq!(lexed.tokens[11].kind, TokenKind::Divide);
+    assert_eq!(lexed.tokens[11].kind, TokenKind::Slash);
     assert_eq!(lexed.tokens[12].kind, TokenKind::LCurly);
     assert_eq!(lexed.tokens[13].kind, TokenKind::Identifier);
     assert_eq!(lexed.tokens[14].kind, TokenKind::Modulus);

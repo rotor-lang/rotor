@@ -1,4 +1,4 @@
-use rotor::parser::{TokenStream, p_LetStmt};
+use rotor::parser::{TokenStream, p_let_stmt};
 use rotor::lexer::lex; // assuming this exists
 use divan::black_box;
 
@@ -16,5 +16,5 @@ fn test_parse(src: &str) {
     let lexed = lex(src);
     let mut stream = TokenStream::new(lexed.tokens);
 
-    let _ = black_box(p_LetStmt(&mut stream));
+    let _ = black_box(p_let_stmt(&mut stream));
 }
