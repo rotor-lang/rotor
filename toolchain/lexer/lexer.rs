@@ -44,9 +44,9 @@ pub enum TokenKind {
 
     // Operators
     Plus,
-    Minus,
-    Multiply,
-    Divide,
+    Line,
+    Star,
+    Slash,
     Modulus,
     And,
     Or,
@@ -113,9 +113,9 @@ impl fmt::Display for TokenKind {
             TokenKind::RSquare => "]",
 
             TokenKind::Plus => "+",
-            TokenKind::Minus => "-",
-            TokenKind::Multiply => "*",
-            TokenKind::Divide => "/",
+            TokenKind::Line => "-",
+            TokenKind::Star => "*",
+            TokenKind::Slash => "/",
             TokenKind::Modulus => "%",
             TokenKind::And => "&&",
             TokenKind::Or => "||",
@@ -185,9 +185,9 @@ impl Token {
             TokenKind::LSquare => self.value == "[",
             TokenKind::RSquare => self.value == "]",
             TokenKind::Plus => self.value == "+",
-            TokenKind::Minus => self.value == "-",
-            TokenKind::Multiply => self.value == "*",
-            TokenKind::Divide => self.value == "/",
+            TokenKind::Line => self.value == "-",
+            TokenKind::Star => self.value == "*",
+            TokenKind::Slash => self.value == "/",
             TokenKind::Modulus => self.value == "%",
             TokenKind::And => self.value == "&&",
             TokenKind::Or => self.value == "||",
@@ -237,8 +237,8 @@ pub fn lex(source: &str) -> Lexed {
                     '[' => TokenKind::LSquare,
                     ']' => TokenKind::RSquare,
                     '+' => TokenKind::Plus,
-                    '-' => TokenKind::Minus,
-                    '*' => TokenKind::Multiply,
+                    '-' => TokenKind::Line,
+                    '*' => TokenKind::Star,
                     '%' => TokenKind::Modulus,
                     _ => unreachable!(), // Oopsie daisys, you shouldn't be here. Now suffer a terrible error message.
                     
@@ -275,7 +275,7 @@ pub fn lex(source: &str) -> Lexed {
                         pos += 1;
                     }
                 } else {
-                    tokens.push(Token::new(TokenKind::Divide, "/", line, column, pos));
+                    tokens.push(Token::new(TokenKind::Slash, "/", line, column, pos));
                     pos += 1;
                     column += 1;
                 }

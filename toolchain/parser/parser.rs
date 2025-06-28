@@ -70,9 +70,9 @@ pub fn p_STMTNAME(stream: &mut TokenStream) -> Result<Stmt, Error> {
 
 */
 
-pub fn p_LetStmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
+pub fn p_let_stmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
     // syntax: (let|const) name[: type] = expr;
-    stream.expect_either(vec![TokenKind::Let, TokenKind::Const]);
+    stream.expect_either(vec![TokenKind::Let, TokenKind::Const])?;
 
     let name = stream.expect(TokenKind::Identifier)?;
     let mut ty = None;
@@ -109,13 +109,13 @@ pub fn p_LetStmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
     })
 }  
 
-pub fn p_UseStmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
+pub fn p_use_stmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
     // syntax: use stator [(import|*), [import], [import], ...]
-    stream.expect(TokenKind::Use);
+    stream.expect(TokenKind::Use)?;
     let stator = stream.expect(TokenKind::Identifier);
     
     // Open square
-    stream.expect(TokenKind::LSquare);
+    stream.expect(TokenKind::LSquare)?;
 
     // Loop until found closing square
     // But maybe also wildcard, idk
@@ -131,7 +131,7 @@ pub fn p_UseStmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
             } else {
                 return Ok(Stmt::UseStmt { stator: stator.unwrap().value, imports: UseImports::List(import_list) })
             }
-        } else if curr.kind == TokenKind::Multiply {
+        } else if curr.kind == TokenKind::Star {
             imports = UseImports::Wildcard;
         } else if curr.kind == TokenKind::Identifier {
             import_list.push(curr.value);
@@ -149,7 +149,7 @@ pub fn p_UseStmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
     }
 }
 
-pub fn p_IfStmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
+pub fn p_if_stmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
     // syntax: if expr { stmt; [stmt;]...} [else {stmt; [stmt;]...}]
     stream.expect(TokenKind::If)?;
 
