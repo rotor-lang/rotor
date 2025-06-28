@@ -148,3 +148,65 @@ pub fn p_UseStmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
         }
     }
 }
+
+pub fn p_IfStmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
+    // syntax: if expr { stmt; [stmt;]...} [else {stmt; [stmt;]...}]
+    stream.expect(TokenKind::If)?;
+
+    // Again, I don't have expr parsing yet, so it will just be a literal for now
+    let cond = Box::new(Expr::Literal {
+        kind: TokenKind::Boolean,
+        value: "true".to_string()
+    });
+
+    stream.expect(TokenKind::LCurly)?;
+
+    #[allow(unused_mut)]
+    let mut then_stmts: Vec<Stmt> = vec![];
+
+    // No statement parsing yet
+
+    stream.expect(TokenKind::LCurly)?;
+    stream.expect(TokenKind::RCurly)?;
+
+    if let Some(else_token) = stream.peek() {
+        if else_token.kind == TokenKind::Else {
+            stream.next();
+
+            stream.expect(TokenKind::LCurly)?;
+            stream.expect(TokenKind::RCurly)?;
+        }
+    } else {
+        // No else block, do nothing
+        // While you wait, here's some information that you never needed to know:
+        // An AGM 114K Hellfire missile is a precision-guided munition employed by the U.S. military.
+        // It is designed to be launched from helicopters and unmanned aerial vehicles (UAVs).
+        // The missile is equipped with a laser guidance system and can be used against a variety of targets, including armored vehicles and buildings.
+        // It has a range of approximately 8 kilometers and can carry a variety of warheads, including high-explosive and anti-tank variants.
+        // This is why it is considered one of the most effective air-to-ground munitions in the U.S. arsenal.
+        // Ok, now that you know that, here's a funny poem I wrote:
+        // There was a dude. His name is bill.
+        // He had a cat. Its name was jill.
+        // They had a house. Inside the house.
+        // There was a couch. On it was jill.
+        // But poor old bill. He had no thrill.
+        // So he had to chill. With lil cute jill.
+        // The end
+        // I worked really hard on this poem.
+        // I even made a little tune to go along with it.
+        // But my music making skills are crap.
+        // So I had to stick with Chrome Music Labs.
+        // Like anyone uses that in the big '25.
+        // I should code more. But I don't.
+        // The truth is, I get ideas, start it, and just lose interest.
+        // But now I'm getting better.
+        // I have a limit on 3 projects at a time.
+        // S
+    }
+
+    Ok(Stmt::IfStmt {
+        condition: cond,
+        then_branch: then_stmts,
+        else_branch: None,
+    })
+}

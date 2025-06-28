@@ -46,6 +46,11 @@ pub enum Stmt {
         return_ty: Option<TokenKind>,
         body: Option<Vec<Stmt>>
     },
+    IfStmt {
+        condition: Box<Expr>,
+        then_branch: Vec<Stmt>,
+        else_branch: Option<Vec<Stmt>>
+    },
     CallStmt(Vec<String>)
 }
 

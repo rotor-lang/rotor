@@ -9,6 +9,8 @@ pub enum TokenKind {
     Let,
     Const,
     Use,
+    If,
+    Else,
 
     // Types
     I32,
@@ -82,6 +84,8 @@ impl fmt::Display for TokenKind {
             TokenKind::Let => "let",
             TokenKind::Const => "const",
             TokenKind::Use => "use",
+            TokenKind::If => "if",
+            TokenKind::Else => "else",
 
             TokenKind::I32 => "i32",
             TokenKind::BOOL => "bool",
@@ -157,6 +161,8 @@ impl Token {
             TokenKind::Let => self.value == "let",
             TokenKind::Const => self.value == "const",
             TokenKind::Use => self.value == "use",
+            TokenKind::If => self.value == "if",
+            TokenKind::Else => self.value == "else",
             TokenKind::Identifier => !self.value.is_empty(),
             TokenKind::I32 => self.value == "i32",
             TokenKind::STR => self.value == "str",
@@ -289,6 +295,8 @@ pub fn lex(source: &str) -> Lexed {
                 match identifier.as_str() {
                     "let" => tokens.push(Token::new(TokenKind::Let, identifier, line, start_column, start_pos)),
                     "const" => tokens.push(Token::new(TokenKind::Const, identifier, line, start_column, start_pos)),
+                    "if" => tokens.push(Token::new(TokenKind::If, identifier, line, start_column, start_pos)),
+                    "else" => tokens.push(Token::new(TokenKind::Else, identifier, line, start_column, start_pos)),
                     "i32" => tokens.push(Token::new(TokenKind::I32, identifier, line, start_column, start_pos)),
                     "f32" => tokens.push(Token::new(TokenKind::Float, identifier, line, start_column, start_pos)),
                     "bool" => tokens.push(Token::new(TokenKind::BOOL, identifier, line, start_column, start_pos)),
