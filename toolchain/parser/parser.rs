@@ -184,3 +184,34 @@ pub fn p_if_stmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
         else_branch: None,
     })
 }
+
+pub fn p_for_stmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
+    // syntax: for variable in Iterable { stmt; [stmt;]...}
+    stream.expect(TokenKind::For)?;
+
+    let var = stream.expect(TokenKind::Identifier)?;
+    
+    // For now, we only assume the loop is over a collection
+    // which has been moved into the variable
+    stream.expect(TokenKind::In)?;
+    let iterable = stream.expect(TokenKind::Identifier)?;
+
+    // Enter loop body
+    stream.expect(TokenKind::LCurly)?;
+    
+    #[allow(unused_mut)]
+    let mut body_stmts: Vec<Stmt> = vec![];
+
+    // Still no block parsing, so we are just having an empty body
+    stream.expect(TokenKind::RCurly)?;
+
+    Ok(Stmt::ForStmt {
+        variable: var.value,
+        iterable: Box::new(Expr::Variable {
+            name: iterable.value,
+            ty: None // No type inference yet
+        }),
+        body: body_stmts
+    })
+
+}

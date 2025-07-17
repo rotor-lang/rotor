@@ -22,6 +22,9 @@ pub enum TokenKind {
     For,
     While,
 
+    // Misc
+    In,
+
     // Types
     I32,
     BOOL,
@@ -98,6 +101,7 @@ impl fmt::Display for TokenKind {
             TokenKind::Else => "else",
             TokenKind::For => "for",
             TokenKind::While => "while",
+            TokenKind::In => "in",
 
             TokenKind::I32 => "i32",
             TokenKind::BOOL => "bool",
@@ -177,6 +181,7 @@ impl Token {
             TokenKind::Else => self.value == "else",
             TokenKind::For => self.value == "for",
             TokenKind::While => self.value == "while",
+            TokenKind::In => self.value == "in",
             TokenKind::Identifier => !self.value.is_empty(),
             TokenKind::I32 => self.value == "i32",
             TokenKind::STR => self.value == "str",
@@ -313,6 +318,7 @@ pub fn lex(source: &str) -> Lexed {
                     "else" => tokens.push(Token::new(TokenKind::Else, identifier, line, start_column, start_pos)),
                     "for" => tokens.push(Token::new(TokenKind::For, identifier, line, start_column, start_pos)),
                     "while" => tokens.push(Token::new(TokenKind::While, identifier, line, start_column, start_pos)),
+                    "in" => tokens.push(Token::new(TokenKind::In, identifier, line, start_column, start_pos)),
                     "i32" => tokens.push(Token::new(TokenKind::I32, identifier, line, start_column, start_pos)),
                     "f32" => tokens.push(Token::new(TokenKind::Float, identifier, line, start_column, start_pos)),
                     "bool" => tokens.push(Token::new(TokenKind::BOOL, identifier, line, start_column, start_pos)),

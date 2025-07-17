@@ -51,6 +51,11 @@ pub enum Stmt {
         then_branch: Vec<Stmt>,
         else_branch: Option<Vec<Stmt>>
     },
+    ForStmt {
+        variable: String,
+        iterable: Box<Expr>,
+        body: Vec<Stmt>
+    },
     CallStmt(Vec<String>)
 }
 
