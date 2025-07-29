@@ -1,6 +1,6 @@
 use std::iter::Peekable;
 use crate::lexer::{Token, TokenKind};
-use crate::parser::nodes::{Expr, Stmt, UseImports};
+use crate::parser::nodes::{Expr, Stmt, UseImports, Program, Block, FnParam};
 use crate::handle_error::{ErrorKind, Error};
 
 pub struct TokenStream {
@@ -164,10 +164,7 @@ pub fn p_if_stmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
     #[allow(unused_mut)]
     let mut then_stmts: Vec<Stmt> = vec![];
 
-    // No statement parsing yet
-
-    stream.expect(TokenKind::LCurly)?;
-    stream.expect(TokenKind::RCurly)?;
+    parse_block(stream)?;
 
     if let Some(else_token) = stream.peek() {
         if else_token.kind == TokenKind::Else {
@@ -197,13 +194,7 @@ pub fn p_for_stmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
     let iterable = stream.expect(TokenKind::Identifier)?;
 
     // Enter loop body
-    stream.expect(TokenKind::LCurly)?;
-    
-    #[allow(unused_mut)]
-    let mut body_stmts: Vec<Stmt> = vec![];
-
-    // Still no block parsing, so we are just having an empty body
-    stream.expect(TokenKind::RCurly)?;
+    let body_stmts = parse_block(stream)?;
 
     Ok(Stmt::ForStmt {
         variable: var.value,
@@ -226,13 +217,7 @@ pub fn p_while_stmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
         value: condition_token.value,
     });
 
-    stream.expect(TokenKind::LCurly)?;
-
-    #[allow(unused_mut)]
-    let mut body_stmts: Vec<Stmt> = vec![];
-    // ditto
-
-    stream.expect(TokenKind::RCurly)?;
+    let body_stmts = parse_block(stream)?;
     Ok(Stmt::WhileStmt {
         condition,
         body: body_stmts,
@@ -240,6 +225,24 @@ pub fn p_while_stmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
 }
 
 // Special parsing
+
+pub fn parse_block(stream: &mut TokenStream) -> Result<Block, Error> {
+    // Parsing blocks of statements.
+    // This can be used to detect single statements (e.g. dull functions)
+
+    let mut block: Block = vec![];
+    while let Some(token) = stream.peek() {
+        if token.kind == TokenKind::RCurly {
+            stream.next(); // Consume the closing curly
+            break;
+        }
+
+        let stmt = parse_stmt(stream)?;
+        block.push(stmt);
+    }
+    Ok(block)
+}
+
 pub fn parse_stmt(stream: &mut TokenStream) -> Result<Stmt, Error> { // TODO: Find the type to be returned
     // This is for parsing all the statements together
     // Contributers, if you add a new statement, please follow
