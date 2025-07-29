@@ -56,6 +56,10 @@ pub enum Stmt {
         iterable: Box<Expr>,
         body: Vec<Stmt>
     },
+    WhileStmt {
+        condition: Box<Expr>,
+        body: Vec<Stmt>
+    },
     CallStmt(Vec<String>)
 }
 

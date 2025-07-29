@@ -215,3 +215,26 @@ pub fn p_for_stmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
     })
 
 }
+
+pub fn p_while_stmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
+    // syntax: while condition {stmt; [stmt;]...}
+    stream.expect(TokenKind::While)?;
+
+    let condition_token = stream.expect(TokenKind::Boolean)?;
+    let condition: Box<Expr> = Box::new(Expr::Literal {
+        kind: TokenKind::Boolean,
+        value: condition_token.value,
+    });
+
+    stream.expect(TokenKind::LCurly)?;
+
+    #[allow(unused_mut)]
+    let mut body_stmts: Vec<Stmt> = vec![];
+    // ditto
+
+    stream.expect(TokenKind::RCurly)?;
+    Ok(Stmt::WhileStmt {
+        condition,
+        body: body_stmts,
+    })
+}
