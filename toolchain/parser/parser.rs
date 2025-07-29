@@ -238,3 +238,38 @@ pub fn p_while_stmt(stream: &mut TokenStream) -> Result<Stmt, Error> {
         body: body_stmts,
     })
 }
+
+// Special parsing
+pub fn parse_stmt(stream: &mut TokenStream) -> Result<Stmt, Error> { // TODO: Find the type to be returned
+    // This is for parsing all the statements together
+    // Contributers, if you add a new statement, please follow
+    // the patterns below to create one. Ensure you have made the
+    // 'p_{name}_stmt' before adding it.
+    match stream.peek().unwrap().kind {
+        TokenKind::Let | TokenKind::Const => {
+            p_let_stmt(stream)
+        },
+        TokenKind::Use => {
+            p_use_stmt(stream)
+        },
+        TokenKind::If => {
+            p_if_stmt(stream)
+        },
+        TokenKind::For => {
+            p_for_stmt(stream)
+        },
+        TokenKind::While => {
+            p_while_stmt(stream)
+        },
+        _ => {
+            // Currently, most of rotor's code will end up here
+            // because it is still in development.
+            Err(Error {
+                kind: ErrorKind::InvalidToken,
+                message: "Found invalid token".to_string(), // TODO: Make a better error message
+                line: stream.peek().unwrap().line,
+                column: stream.peek().unwrap().column
+            })
+        }
+    }
+}

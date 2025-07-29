@@ -1,5 +1,7 @@
 use crate::lexer::TokenKind;
 
+type Program = Vec<Stmt>;
+
 pub enum Expr {
     Literal {
         kind: TokenKind,

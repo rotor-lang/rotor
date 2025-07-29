@@ -24,10 +24,10 @@ pub enum ErrorKind {
 #[allow(dead_code)]
 #[derive(Debug)]
 pub struct Error {
-    kind: ErrorKind,
-    message: String,
-    line: usize,
-    column: usize,
+    pub(crate) kind: ErrorKind,
+    pub(crate) message: String,
+    pub(crate) line: usize,
+    pub(crate) column: usize,
 }
 
 impl Error {
