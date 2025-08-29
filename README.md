@@ -50,7 +50,7 @@
     ".\target\release\rotor.exe" --version
     ```
 
-If you see a version output, congrats — Rotor is installed!
+If you see a version output, congratulations — Rotor is installed!
 
 ---
 
@@ -75,7 +75,7 @@ If you see a version output, congrats — Rotor is installed!
     rotor --version
     ```
 
-If you see a version output, congrats — Rotor is installed!
+If you see a version output, congratulations — Rotor is installed!
 
 ### Linux
 
@@ -98,13 +98,13 @@ If you see a version output, congrats — Rotor is installed!
     rotor --version
     ```
 
-If you see a version output, congrats — Rotor is installed!
+If you see a version output, congratulations — Rotor is installed!
 
 ### Want to Contribute?
 
 Rotor is in active development! If you have ideas, bug fixes, or want to help, [open an issue](https://github.com/rotor-lang/rotor/issues) or make a pull request.
 
-Join our Discord community to chat, get help, and hype Rotor up: [Join here!](https://discord.gg/2aV99HRqB2)
+Join our Discord community to chat, get help, and help develop Rotor: [Join here!](https://discord.gg/2aV99HRqB2)
 
 #### Contribution news (8/06/2025):
 

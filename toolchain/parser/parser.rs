@@ -276,3 +276,8 @@ pub fn parse_stmt(stream: &mut TokenStream) -> Result<Stmt, Error> { // TODO: Fi
         }
     }
 }
+
+pub fn parse_expr() {
+    // This function will remain empty until I learn how to parse expressions.
+    // Unless a contributer who knows how to do this,
+}
